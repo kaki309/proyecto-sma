@@ -35,5 +35,6 @@ public class GameController : MonoBehaviour
     {
         currentCharacter = character;
         Debug.Log($"[GameController] Character {character} set in GameController");
+        SceneController.Instance.ChangeScene(0);
     }
 }
