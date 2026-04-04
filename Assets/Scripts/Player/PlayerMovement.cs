@@ -5,8 +5,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [Header("Movement Variables")]
-    [SerializeField] float moveSpeed;
-    [SerializeField] float jumpForce;
+    [SerializeField] float moveSpeed = 30;
+    [SerializeField] float jumpForce = 4;
 
     // Interal variables
     InputSystem_Actions actions;
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         actions.Player.Move.canceled += PerformMovement;
         // Jump
         actions.Player.Jump.performed += PerformJump;
-        actions.Player.Jump.canceled -= PerformJump;
+        actions.Player.Jump.canceled += PerformJump;
     }
     void OnDisable()
     {
@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     // -------------------------- MOVEMENT METHODS
     void PerformMovement(InputAction.CallbackContext ctx)
     {
-        move = ctx.ReadValue<Vector2>().x;
+        move = ctx.ReadValue<Vector2>().x * 25;
     }
     void PerformJump(InputAction.CallbackContext ctx)
     {
