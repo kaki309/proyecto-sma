@@ -468,24 +468,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!1 &1868137920 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1323962644135922928, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
-  m_PrefabInstance: {fileID: 591623008329142880}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1868137925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868137920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ControlPath: <Gamepad>/leftStick/left
 --- !u!1001 &591623008329142880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -494,10 +476,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2680108421043131066, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
-      propertyPath: m_UseIsolatedInputActions
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6108451789052882789, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
       propertyPath: m_Name
       value: UI Player Controls
@@ -582,37 +560,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2680108421043131066, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
-    - {fileID: 8655150363211380671, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1323962644135922928, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1868137925}
-    - targetCorrespondingSourceObject: {fileID: 4739088357340314659, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 591623008329142882}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
---- !u!1 &591623008329142881 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4739088357340314659, guid: d9ef1cbb89fa5684bacfda5145f4cef4, type: 3}
-  m_PrefabInstance: {fileID: 591623008329142880}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &591623008329142882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591623008329142881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ControlPath: <Gamepad>/leftStick/right
 --- !u!1001 &2861951226808113725
 PrefabInstance:
   m_ObjectHideFlags: 0
