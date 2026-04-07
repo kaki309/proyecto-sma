@@ -393,7 +393,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6.09375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -575,7 +575,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2419098191087361034, guid: fd2ec0c8fddb91a4bb3b5494c0ff74ee, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: PlayerMateo
       objectReference: {fileID: 0}
     - target: {fileID: 9091392709989520778, guid: fd2ec0c8fddb91a4bb3b5494c0ff74ee, type: 3}
       propertyPath: m_LocalPosition.x
