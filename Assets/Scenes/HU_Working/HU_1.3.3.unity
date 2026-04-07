@@ -331,6 +331,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1460407113
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2419098191087361034, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_Name
+      value: PlayerSara
+      objectReference: {fileID: 0}
+    - target: {fileID: 2419098191087361034, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5258405337706833476, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e59ddffb44e0c974a9980cd96a092fc3, type: 2}
+    - target: {fileID: 6000642821066189748, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1674941582, guid: 0c911055c6a397a41aa95074686708ca, type: 3}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091392709989520778, guid: 680847410f74603489306129943482bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 680847410f74603489306129943482bb, type: 3}
 --- !u!1 &1807099690
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,13 +646,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerMateo
       objectReference: {fileID: 0}
+    - target: {fileID: 2419098191087361034, guid: fd2ec0c8fddb91a4bb3b5494c0ff74ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9091392709989520778, guid: fd2ec0c8fddb91a4bb3b5494c0ff74ee, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9091392709989520778, guid: fd2ec0c8fddb91a4bb3b5494c0ff74ee, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -4.15
       objectReference: {fileID: 0}
     - target: {fileID: 9091392709989520778, guid: fd2ec0c8fddb91a4bb3b5494c0ff74ee, type: 3}
       propertyPath: m_LocalPosition.z
@@ -630,4 +703,5 @@ SceneRoots:
   - {fileID: 1807099693}
   - {fileID: 591623008329142880}
   - {fileID: 2861951226808113725}
+  - {fileID: 1460407113}
   - {fileID: 685819175}
