@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     // Interal variables
     InputSystem_Actions actions;
     Rigidbody2D rb;
+    Animator animator;
     float move;
     bool isGrounded;
 
@@ -42,11 +43,28 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
     void Update()
     {
+        // Change Direction of View
+        if (move < 0)
+        { transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z); }
+        else if (move > 0)
+        { transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z); }
+        // Check for ground
         isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, checkDistance, groundLayer);
+        // Walk Animation
+        if (move != 0)
+        { animator.SetBool("isWalking", true); }
+        else { animator.SetBool("isWalking", false); }
+        // Jump Animation
+        if (isGrounded)
+        { animator.SetBool("isJumping", false); }
+        else { animator.SetBool("isJumping", true); }
+
     }
+
     void LateUpdate()
     {
         rb.velocity = new Vector2(move * moveSpeed * Time.deltaTime, rb.velocity.y);
