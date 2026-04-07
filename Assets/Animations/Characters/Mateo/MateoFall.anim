@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MateoJump
+  m_Name: MateoFall
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,14 +21,8 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 1166670857, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
-    - time: 0.18333334
-      value: {fileID: 801487177, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
-    - time: 0.33333334
-      value: {fileID: -796304574, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
-    - time: 0.5
       value: {fileID: -115860404, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
-    - time: 0.56666666
+    - time: 0.5
       value: {fileID: -115860404, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
     attribute: m_Sprite
     path: 
@@ -52,9 +46,6 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 1166670857, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
-    - {fileID: 801487177, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
-    - {fileID: -796304574, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
     - {fileID: -115860404, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
     - {fileID: -115860404, guid: f0ee19db00c31dd45a3c97a4b2292add, type: 3}
   m_AnimationClipSettings:
@@ -62,7 +53,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5833333
+    m_StopTime: 0.51666665
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

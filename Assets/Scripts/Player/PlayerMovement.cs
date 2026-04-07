@@ -60,8 +60,8 @@ public class PlayerMovement : MonoBehaviour
         else { animator.SetBool("isWalking", false); }
         // Jump Animation
         if (isGrounded)
-        { animator.SetBool("isJumping", false); }
-        else { animator.SetBool("isJumping", true); }
+        { animator.SetBool("isFalling", false); }
+        else { animator.SetBool("isFalling", true); }
 
     }
 
@@ -82,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
                 rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                animator.SetTrigger("jump");
             }
         }
     }
