@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterSelection : MonoBehaviour
 {
-    // Methods to call from buttons
-    public void ChooseSara() => ChooseCharacter(Character.Sara);
-    public void ChooseMateo() => ChooseCharacter(Character.Mateo);
-    
-    // Private method to communicate with GameController
-    private void ChooseCharacter(Character character)
+    public void ChooseSara()
     {
-        GameController.Instace.SetCurrentCharacter(character);
+        GameController.Instace.SetCurrentCharacter(Character.Sara);
     }
+
+    public void ChooseMateo()
+    {
+        GameController.Instace.SetCurrentCharacter(Character.Mateo);
+    }
+
 }
