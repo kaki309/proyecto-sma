@@ -1,16 +1,17 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CharacterSelection : MonoBehaviour
 {
-    public void ChooseSara()
-    {
-        GameController.Instace.SetCurrentCharacter(Character.Sara);
-    }
+    [SerializeField] GameObject preventInputPanel;
 
-    public void ChooseMateo()
-    {
-        GameController.Instace.SetCurrentCharacter(Character.Mateo);
-    }
+    public void ChooseSara() => StartCoroutine(ConfirmSelection(Character.Sara));
+    public void ChooseMateo() => StartCoroutine(ConfirmSelection(Character.Mateo));
 
+    IEnumerator ConfirmSelection(Character character)
+    {
+        preventInputPanel.SetActive(true);
+        yield return new WaitForSecondsRealtime(3.5f);
+        GameController.Instace.SetCurrentCharacter(character);
+    }
 }
