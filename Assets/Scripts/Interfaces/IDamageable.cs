@@ -2,9 +2,23 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    float CurrentHealth { get; }
+    float CurrentHealth { get; protected set; }
     float MaxHealth { get; }
-    bool IsAlive { get; }
+    bool IsAlive {get; protected set;}
     
-    void TakeDamage(float damage);
+    void TakeDamage(float damage)
+    {
+        if (!IsAlive) return;
+
+        CurrentHealth -= damage;
+
+        if (CurrentHealth <= 0)
+        {
+            CurrentHealth = 0;
+            IsAlive = false;
+            Die();
+        }
+    }
+
+    void Die();
 }
