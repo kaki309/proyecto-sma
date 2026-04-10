@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6b43315f5c7f90b418834a3afdc2b5f5
+guid: 4942ee441329e854e956800bb22864f4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,7 +108,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Mateo animado saludo_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 10
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 949e8d6fd6899214b9a433b8b0c2a2ae
+      internalID: -1881753588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mateo animado saludo_1
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 10
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 961eeabf8026d364ebf04c1335d3c475
+      internalID: 49325960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mateo animado saludo_2
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 10
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 863d29db4208f4c45b000afa068cb7b9
+      internalID: 156205781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mateo animado saludo_3
+      rect:
+        serializedVersion: 2
+        x: 970
+        y: 10
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da67ba3aef006bd439276c7478ccb460
+      internalID: 573171711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +203,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Mateo animado saludo_0: -1881753588
+      Mateo animado saludo_1: 49325960
+      Mateo animado saludo_2: 156205781
+      Mateo animado saludo_3: 573171711
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

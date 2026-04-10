@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d9e8d3a2d43145d42bd96c4490d7e271
+guid: 86f9b13ffeb48cd42aa7db21fb816799
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,7 +108,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "Animaci\xF3n_Saludo_Sara_0"
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 10
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 872b89448662fb14b958ec26820f93fb
+      internalID: -366310265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Animaci\xF3n_Saludo_Sara_1"
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 10
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d189e4fa7a0ac4e4eba5c61abeb33f89
+      internalID: 1569994483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Animaci\xF3n_Saludo_Sara_2"
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 10
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81f5c492aa1498742a6b52f8731f115b
+      internalID: 421593631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Animaci\xF3n_Saludo_Sara_3"
+      rect:
+        serializedVersion: 2
+        x: 970
+        y: 10
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb8588ced7992e648bdd5b7815a23299
+      internalID: 1351701159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +203,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "Animaci\xF3n_Saludo_Sara_0": -366310265
+      "Animaci\xF3n_Saludo_Sara_1": 1569994483
+      "Animaci\xF3n_Saludo_Sara_2": 421593631
+      "Animaci\xF3n_Saludo_Sara_3": 1351701159
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
