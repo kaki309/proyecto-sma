@@ -39,14 +39,17 @@ public class SceneController : MonoBehaviour
         // Load the loading scene in English
         SceneManager.LoadScene(loadingSceneName);
 
-        yield return null;
-
         // Find the loading controller
-        LoadingSceneController loader = FindObjectOfType<LoadingSceneController>();
+        LoadingSceneController loader = null;
+        while (loader == null)
+        {
+            loader = FindObjectOfType<LoadingSceneController>();
+            yield return null;
+        }
 
         if (loader != null)
         {
-            loader.SetSceneToLoad(sceneName);
+            loader.SetSceneAndStartLoad(sceneName);
         }
         else
         {

@@ -11,18 +11,14 @@ public class LoadingSceneController : MonoBehaviour
     [SerializeField] private TMP_Text adviceText;
 
     [SerializeField] private List<string> advices;
-    [SerializeField] private float adviceChangeTime = 3f;
+    [SerializeField] private float adviceChangeTime = 4f;
 
     private float loadingScreenTime = 6f;
     private string sceneToLoad;
 
-    public void SetSceneToLoad(string sceneName)
+    public void SetSceneAndStartLoad(string sceneName)
     {
         sceneToLoad = sceneName;
-    }
-
-    void Start()
-    {
         StartCoroutine(LoadSceneAsync());
     }
 
