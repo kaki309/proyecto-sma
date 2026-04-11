@@ -7,8 +7,10 @@ public class PlayerCamera : MonoBehaviour
 
     void Start()
     {
-        if (playerTransform == null && PlayerMovement.Instance != null)
-            playerTransform = PlayerMovement.Instance.transform;
+        if (playerTransform == null)
+        {
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     void LateUpdate()
