@@ -3,12 +3,14 @@ using UnityEngine;
 public abstract class Being : MonoBehaviour
 {
     protected int currentHealth;
-    public abstract int MaxHealth {get;}
-    public bool IsAlive {get; protected set;}
+    public int CurrentHealth {get => currentHealth;}
+    public abstract int MaxHealth { get; } // Abstract because every subclass must implement its own MaxHealth, that will initialize the "currentHealth" property in the Awake method. 
+    public bool IsAlive { get; protected set; }
 
     protected virtual void Awake()
     {
         currentHealth = MaxHealth;
+        IsAlive = true;
     }
 
     public virtual void TakeDamage(int damage)
