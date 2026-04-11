@@ -35,6 +35,8 @@ public class GameController : MonoBehaviour
     {
         currentCharacter = character;
         Debug.Log($"[GameController] Character {character} set in GameController");
-        SceneController.Instance.ChangeScene(0);
+        //SceneController.Instance.ChangeScene(0);
+        //Andres aqui le estableci que cargue la escena con el loading screen, solo tienes que cambiar el nombre de la escena a cargar
+        SceneController.Instance.LoadSceneWithLoadingScreen("NombredeLaEscena");
     }
 }

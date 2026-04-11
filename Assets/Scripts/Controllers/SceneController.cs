@@ -1,11 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
     public static SceneController Instance;
+
+    [SerializeField] private string loadingSceneName = "LoadingScene";
 
     private void Awake()
     {
@@ -21,9 +22,35 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    // Method to change scenes
     public void ChangeScene(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
+    }
+
+
+    public void LoadSceneWithLoadingScreen(string sceneName)
+    {
+        StartCoroutine(LoadLoadingScene(sceneName));
+    }
+
+    // Corrutine
+    IEnumerator LoadLoadingScene(string sceneName)
+    {
+        // Load the loading scene in English
+        SceneManager.LoadScene(loadingSceneName);
+
+        yield return null;
+
+        // Find the loading controller
+        LoadingSceneController loader = FindObjectOfType<LoadingSceneController>();
+
+        if (loader != null)
+        {
+            loader.SetSceneToLoad(sceneName);
+        }
+        else
+        {
+            Debug.LogError("LoadingSceneController not found!");
+        }
     }
 }
