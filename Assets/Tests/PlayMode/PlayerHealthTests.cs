@@ -5,48 +5,46 @@ using System.Collections;
 
 public class PlayerHealthTests
 {
-    private GameObject playerObject;
-    private Player player;
+    private PlayerHealth player;
 
     [SetUp]
     public void SetUp()
     {
-        playerObject = new GameObject("Player");
-        player = playerObject.AddComponent<Player>();
+        player = new GameObject("Player").AddComponent<PlayerHealth>();
     }
 
     [TearDown]
     public void TearDown()
     {
-        Object.Destroy(playerObject);
+        Object.Destroy(player.gameObject);
     }
 
     [UnityTest]
-    public IEnumerator PlayerStartsWith100Health()
+    public IEnumerator PlayerStartsWith5Health()
     {
         yield return null;  // Wait one frame for Awake to run
-        Assert.AreEqual(100f, player.CurrentHealth);
+        Assert.AreEqual(5, player.CurrentHealth);
     }
 
     [UnityTest]
-    public IEnumerator PlayerTakesThreePunches_EndsWith30Health()
+    public IEnumerator PlayerTakesThreePunches_EndsWith2Health()
     {
         yield return null;  // Wait one frame for Awake to run
         
         // Arrange
-        float expectedHealth = 30f;
+        int expectedHealth = 2;
 
         // Act
-        player.TakeDamage(20);  // First punch: 20 damage (100 - 20 = 80)
-        player.TakeDamage(25);  // Second punch: 25 damage (80 - 25 = 55)
-        player.TakeDamage(25);  // Third punch: 25 damage (55 - 25 = 30)
+        player.TakeDamage(1);  // First punch: 1 damage
+        player.TakeDamage(1);  // Second punch: 1 damage
+        player.TakeDamage();  // Third punch: No damage defined (Default value is 1)
 
         // Assert
         Assert.AreEqual(expectedHealth, player.CurrentHealth);
     }
 
     [UnityTest]
-    public IEnumerator PlayerIsAlive()
+    public IEnumerator PlayerIsAliveOnStart()
     {
         yield return null;  // Wait one frame for Awake to run
         Assert.IsTrue(player.IsAlive);
@@ -61,7 +59,7 @@ public class PlayerHealthTests
         player.TakeDamage(player.MaxHealth);
 
         // Assert
-        Assert.AreEqual(0f, player.CurrentHealth);
+        Assert.AreEqual(0, player.CurrentHealth);
         Assert.IsFalse(player.IsAlive);
     }
 
@@ -71,10 +69,11 @@ public class PlayerHealthTests
         yield return null;  // Wait one frame for Awake to run
         
         // Act
-        player.TakeDamage(player.MaxHealth+50);  // Deal more than max health
+        player.TakeDamage(player.MaxHealth + 50);  // Deal more than max health
 
         // Assert
-        Assert.AreEqual(0f, player.CurrentHealth);
+        Assert.AreEqual(0, player.CurrentHealth);
         Assert.IsFalse(player.IsAlive);
     }
 }
+
