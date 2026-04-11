@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Back Deco
+    uniqueID: 1129562985
+    locked: 0
+  - name: Floor
+    uniqueID: 521290293
+    locked: 0
+  - name: Front Deco
+    uniqueID: 282298175
+    locked: 0
