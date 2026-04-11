@@ -2,38 +2,24 @@ using UnityEngine;
 
 public abstract class Being : MonoBehaviour
 {
-    [SerializeField] protected float maxHealth = 100f;
-    protected float currentHealth;
-    protected bool isAlive = true;
-
-    public float CurrentHealth 
-    { 
-        get => currentHealth;
-        protected set => currentHealth = value;
-    }
-
-    public float MaxHealth => maxHealth;
-
-    public bool IsAlive 
-    { 
-        get => isAlive;
-        protected set => isAlive = value;
-    }
+    protected int currentHealth;
+    public abstract int MaxHealth {get;}
+    public bool IsAlive {get; protected set;}
 
     protected virtual void Awake()
     {
-        currentHealth = maxHealth;
+        currentHealth = MaxHealth;
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(int damage)
     {
         if (!IsAlive) return;
 
-        CurrentHealth -= damage;
+        currentHealth -= damage;
 
-        if (CurrentHealth <= 0)
+        if (currentHealth <= 0)
         {
-            CurrentHealth = 0;
+            currentHealth = 0;
             IsAlive = false;
             Die();
         }

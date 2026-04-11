@@ -1,15 +1,16 @@
 using System;
 using UnityEngine;
 
-public class Player : Being
+public class PlayerHealth : Being
 {
-    public static event Action<float> OnDamageTaken;
+    public override int MaxHealth => 5;
+    public static event Action<int> OnDamageTaken;
     public static event Action OnPlayerDeath;
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(int damage = 1)
     {
         base.TakeDamage(damage);
-        OnDamageTaken?.Invoke(CurrentHealth);
+        OnDamageTaken?.Invoke(currentHealth);
     }
 
     protected override void Die()
