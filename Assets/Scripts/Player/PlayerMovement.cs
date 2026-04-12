@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,14 +11,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float moveSpeed = 30;
     [Tooltip("Multiplier for movement effects. Default = 8")]
     [SerializeField] float moveMultiplierOnGround = 8;
-
-    [Header("Jump")]
-    [SerializeField] float jumpForce = 4;
     [Tooltip("Multiplier for movement while falling. Default = 4")]
     [SerializeField] float moveMultiplierOnAir = 4;
+
+    [Header("Jump")]
+    [SerializeField] float jumpForce = 5;
+    [SerializeField] float sustainedJumpForce = 4;
     [SerializeField] Transform groundCheckLeft;
     [SerializeField] Transform groundCheckRight;
-    [SerializeField] float checkDistance;
+    [SerializeField] float checkDistance = 0.12f;
     [SerializeField] LayerMask groundLayer;
 
     // Interal variables
@@ -28,6 +30,10 @@ public class PlayerMovement : MonoBehaviour
     float _moveMultiplier;
     bool isGrounded;
     bool isChangingMoveSpeed;
+    bool isJumping;
+    bool hasAppliedJumpImpulse;
+    float jumpHoldTime;
+    const float MAX_JUMP_HOLD_TIME = 1f;
 
     // -------------------------- UNITY METHODS
     void Awake()
@@ -62,19 +68,23 @@ public class PlayerMovement : MonoBehaviour
     {
         // Check for ground
         CheckGrounded();
+        // Update jump state after max hold time has passed
+        UpdateJumpState();
         // Set movement speed internal multiplier
         SetMovementSpeed();
         // Change Direction of View
         SetSpriteDirection();
         // Walk Animation
         SetWalkingAnimation();
-        // Jump Animation
-        SetJumpingAnimation();
+        // Animation while being on air (Jump or fall)
+        SetOnAirAnimations();
 
     }
     void FixedUpdate()
     {
         rb.velocity = new Vector2(move * moveSpeed * _moveMultiplier * Time.fixedDeltaTime, rb.velocity.y);
+
+        ApplyJumpForce();
     }
     // -------------------------- MOVEMENT METHODS
     void PerformMovement(InputAction.CallbackContext ctx)
@@ -85,14 +95,76 @@ public class PlayerMovement : MonoBehaviour
     {
         if (ctx.performed)
         {
-            if (isGrounded)
+            if (isGrounded && !isJumping)
             {
+                isJumping = true;
+                hasAppliedJumpImpulse = false;
+                jumpHoldTime = 0f;
                 rb.velocity = new Vector2(rb.velocity.x, 0);
-                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                animator.SetTrigger("jump");
             }
         }
+        else if (ctx.canceled)
+        {
+            isJumping = false;
+        }
     }
+    void CheckGrounded()
+    {
+        bool checkGroundOnLeft = Physics2D.Raycast(groundCheckLeft.position, Vector2.down, checkDistance, groundLayer);
+        bool checkGroundOnRight = Physics2D.Raycast(groundCheckRight.position, Vector2.down, checkDistance, groundLayer);
+        // If any of the checks gets true, then the player is touching the ground:
+        isGrounded = checkGroundOnLeft || checkGroundOnRight;
+    }
+    void UpdateJumpState()
+    {
+        // Auto-stop jump if max hold time reached
+        if (isJumping && jumpHoldTime >= MAX_JUMP_HOLD_TIME)
+        {
+            isJumping = false;
+        }
+    }
+    void SetMovementSpeed()
+    {
+        float desiredSpeed = isGrounded ? moveMultiplierOnGround : moveMultiplierOnAir;
+
+        if (_moveMultiplier != desiredSpeed && !isChangingMoveSpeed)
+            StartCoroutine(ChangeMovementMultiplierProgressively(desiredSpeed));
+    }
+    IEnumerator ChangeMovementMultiplierProgressively(float desiredSpeed)
+    {
+        isChangingMoveSpeed = true;
+        float duration = 0.5f;
+        float elapsed = 0f;
+        float startSpeed = _moveMultiplier;
+
+        while (elapsed < duration)
+        {
+            _moveMultiplier = Mathf.Lerp(startSpeed, desiredSpeed, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        _moveMultiplier = desiredSpeed;
+        isChangingMoveSpeed = false;
+    }
+    void ApplyJumpForce()
+    {
+        // Apply jump force while holding button
+        if (isJumping && jumpHoldTime < MAX_JUMP_HOLD_TIME)
+        {
+            // Apply initial impulse on first frame of jump
+            if (!hasAppliedJumpImpulse)
+            {
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                hasAppliedJumpImpulse = true;
+            }
+            
+            // Apply sustain force to extend jump
+            rb.AddForce(new Vector2(0, sustainedJumpForce), ForceMode2D.Force);
+            jumpHoldTime += Time.fixedDeltaTime;
+        }
+    }
+    // -------------------------- VISUAL CHANGES
     void SetSpriteDirection()
     {
         if (move < 0)
@@ -106,49 +178,26 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
     }
-    void CheckGrounded()
-    {
-        bool checkGroundOnLeft = Physics2D.Raycast(groundCheckLeft.position, Vector2.down, checkDistance, groundLayer);
-        bool checkGroundOnRight = Physics2D.Raycast(groundCheckRight.position, Vector2.down, checkDistance, groundLayer);
-        // If any of the checks gets true, then the player is touching the ground:
-        isGrounded = checkGroundOnLeft || checkGroundOnRight;
-    }
-    void SetMovementSpeed()
-    {
-        float desiredSpeed = isGrounded ? moveMultiplierOnGround : moveMultiplierOnAir;
-        
-        if (_moveMultiplier != desiredSpeed && !isChangingMoveSpeed)
-            StartCoroutine(ChangeMovementMultiplierProgressively(desiredSpeed));
-    }
-    IEnumerator ChangeMovementMultiplierProgressively(float desiredSpeed)
-    {   
-        isChangingMoveSpeed = true;
-        float duration = 0.5f;
-        float elapsed = 0f;
-        float startSpeed = _moveMultiplier;
-        
-        while (elapsed < duration)
-        {
-            _moveMultiplier = Mathf.Lerp(startSpeed, desiredSpeed, elapsed / duration);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        
-        _moveMultiplier = desiredSpeed;
-        isChangingMoveSpeed = false;
-    }
-    // -------------------------- ANIMATIONS
     void SetWalkingAnimation()
     {
         if (move != 0)
         { animator.SetBool("isWalking", true); }
         else { animator.SetBool("isWalking", false); }
     }
-    void SetJumpingAnimation()
+    void SetOnAirAnimations()
     {
         if (isGrounded)
-        { animator.SetBool("isFalling", false); }
-        else { animator.SetBool("isFalling", true); }
+        {
+            animator.SetBool("isFalling", false);
+            animator.SetBool("isJumping", false);
+        }
+        else if (isJumping) { animator.SetBool("isJumping", true); }
+        // Negative velocity means Falling
+        else if (rb.velocity.y < 0)
+        {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", true);
+        }
     }
 
     // -------------------------- EDITOR HELPERS
