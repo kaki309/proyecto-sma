@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,9 +7,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] float moveSpeed = 30;
+    
     [Header("Jump")]
     [SerializeField] float jumpForce = 4;
-    [SerializeField] Transform groundCheck;
+    [SerializeField] Transform groundCheckLeft;
+    [SerializeField] Transform groundCheckRight;
     [SerializeField] float checkDistance;
     [SerializeField] LayerMask groundLayer;
 
@@ -48,12 +51,19 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Change Direction of View
-        if (move < 0)
-        { transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z); }
-        else if (move > 0)
-        { transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z); }
+        if (move < 0){
+            // Moving to the left
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+        }
+        else if (move > 0){
+            // Moving to the right
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+        }
         // Check for ground
-        isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, checkDistance, groundLayer);
+        bool checkGroundOnLeft = Physics2D.Raycast(groundCheckLeft.position, Vector2.down, checkDistance, groundLayer);
+        bool checkGroundOnRight = Physics2D.Raycast(groundCheckRight.position, Vector2.down, checkDistance, groundLayer);
+        // If any of the checks gets true, then the player is touching the ground:
+        isGrounded = checkGroundOnLeft || checkGroundOnRight;
         // Walk Animation
         if (move != 0)
         { animator.SetBool("isWalking", true); }
@@ -90,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - checkDistance));
+        Gizmos.DrawLine(groundCheckLeft.position, new Vector2(groundCheckLeft.position.x, groundCheckLeft.position.y - checkDistance));
+        Gizmos.DrawLine(groundCheckRight.position, new Vector2(groundCheckRight.position.x, groundCheckRight.position.y - checkDistance));
     }
 }
