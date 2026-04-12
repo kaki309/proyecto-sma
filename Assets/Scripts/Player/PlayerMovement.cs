@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,9 +8,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] float moveSpeed = 30;
-    
+    [Tooltip("Multiplier for movement effects. Default = 8")]
+    [SerializeField] float moveMultiplierOnGround = 8;
+
     [Header("Jump")]
     [SerializeField] float jumpForce = 4;
+    [Tooltip("Multiplier for movement while falling. Default = 4")]
+    [SerializeField] float moveMultiplierOnAir = 4;
     [SerializeField] Transform groundCheckLeft;
     [SerializeField] Transform groundCheckRight;
     [SerializeField] float checkDistance;
@@ -20,7 +25,9 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     Animator animator;
     float move;
+    float _moveMultiplier;
     bool isGrounded;
+    bool isChangingMoveSpeed;
 
     // -------------------------- UNITY METHODS
     void Awake()
@@ -41,48 +48,38 @@ public class PlayerMovement : MonoBehaviour
     {
         actions.Player.Disable();
         actions.Player.Move.performed -= PerformMovement;
+        actions.Player.Move.canceled -= PerformMovement;
         actions.Player.Jump.performed -= PerformJump;
+        actions.Player.Jump.canceled -= PerformJump;
     }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
+        _moveMultiplier = moveMultiplierOnGround;
     }
     void Update()
     {
-        // Change Direction of View
-        if (move < 0){
-            // Moving to the left
-            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
-        }
-        else if (move > 0){
-            // Moving to the right
-            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-        }
         // Check for ground
-        bool checkGroundOnLeft = Physics2D.Raycast(groundCheckLeft.position, Vector2.down, checkDistance, groundLayer);
-        bool checkGroundOnRight = Physics2D.Raycast(groundCheckRight.position, Vector2.down, checkDistance, groundLayer);
-        // If any of the checks gets true, then the player is touching the ground:
-        isGrounded = checkGroundOnLeft || checkGroundOnRight;
+        CheckGrounded();
+        // Set movement speed internal multiplier
+        SetMovementSpeed();
+        // Change Direction of View
+        SetSpriteDirection();
         // Walk Animation
-        if (move != 0)
-        { animator.SetBool("isWalking", true); }
-        else { animator.SetBool("isWalking", false); }
+        SetWalkingAnimation();
         // Jump Animation
-        if (isGrounded)
-        { animator.SetBool("isFalling", false); }
-        else { animator.SetBool("isFalling", true); }
+        SetJumpingAnimation();
 
     }
-
-    void LateUpdate()
+    void FixedUpdate()
     {
-        rb.velocity = new Vector2(move * moveSpeed * Time.deltaTime, rb.velocity.y);
+        rb.velocity = new Vector2(move * moveSpeed * _moveMultiplier * Time.fixedDeltaTime, rb.velocity.y);
     }
     // -------------------------- MOVEMENT METHODS
     void PerformMovement(InputAction.CallbackContext ctx)
     {
-        move = ctx.ReadValue<Vector2>().x * 25;
+        move = ctx.ReadValue<Vector2>().x;
     }
     void PerformJump(InputAction.CallbackContext ctx)
     {
@@ -96,6 +93,64 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    void SetSpriteDirection()
+    {
+        if (move < 0)
+        {
+            // Moving to the left
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+        }
+        else if (move > 0)
+        {
+            // Moving to the right
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+        }
+    }
+    void CheckGrounded()
+    {
+        bool checkGroundOnLeft = Physics2D.Raycast(groundCheckLeft.position, Vector2.down, checkDistance, groundLayer);
+        bool checkGroundOnRight = Physics2D.Raycast(groundCheckRight.position, Vector2.down, checkDistance, groundLayer);
+        // If any of the checks gets true, then the player is touching the ground:
+        isGrounded = checkGroundOnLeft || checkGroundOnRight;
+    }
+    void SetMovementSpeed()
+    {
+        float desiredSpeed = isGrounded ? moveMultiplierOnGround : moveMultiplierOnAir;
+        
+        if (_moveMultiplier != desiredSpeed && !isChangingMoveSpeed)
+            StartCoroutine(ChangeMovementMultiplierProgressively(desiredSpeed));
+    }
+    IEnumerator ChangeMovementMultiplierProgressively(float desiredSpeed)
+    {   
+        isChangingMoveSpeed = true;
+        float duration = 0.5f;
+        float elapsed = 0f;
+        float startSpeed = _moveMultiplier;
+        
+        while (elapsed < duration)
+        {
+            _moveMultiplier = Mathf.Lerp(startSpeed, desiredSpeed, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        _moveMultiplier = desiredSpeed;
+        isChangingMoveSpeed = false;
+    }
+    // -------------------------- ANIMATIONS
+    void SetWalkingAnimation()
+    {
+        if (move != 0)
+        { animator.SetBool("isWalking", true); }
+        else { animator.SetBool("isWalking", false); }
+    }
+    void SetJumpingAnimation()
+    {
+        if (isGrounded)
+        { animator.SetBool("isFalling", false); }
+        else { animator.SetBool("isFalling", true); }
+    }
+
     // -------------------------- EDITOR HELPERS
     void OnDrawGizmosSelected()
     {
