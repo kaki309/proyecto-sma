@@ -434,7 +434,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 30
-  jumpForce: 6
+  moveMultiplierOnGround: 8
+  moveMultiplierOnAir: 4
+  jumpForce: 20
   groundCheckLeft: {fileID: 1848035576714946209}
   groundCheckRight: {fileID: 578895918319666129}
   checkDistance: 0.12
