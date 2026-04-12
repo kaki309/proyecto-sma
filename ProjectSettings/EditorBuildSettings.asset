@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/HU_Working/HU 1.1.1.unity
     guid: f62964f49958bc34a9a13790fb6414a8
   - enabled: 1
-    path: Assets/Scenes/Loading/HU 1.4.2 Loading.unity
+    path: Assets/Scenes/Loading/LoadingScene.unity
     guid: e381b490a1f74c2449f31fc0e451432a
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
