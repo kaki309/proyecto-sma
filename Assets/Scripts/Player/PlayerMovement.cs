@@ -66,14 +66,16 @@ public class PlayerMovement : MonoBehaviour
     {
         // Check for ground
         CheckGrounded();
+        // Update jump state after max hold time has passed
+        UpdateJumpState();
         // Set movement speed internal multiplier
         SetMovementSpeed();
         // Change Direction of View
         SetSpriteDirection();
         // Walk Animation
         SetWalkingAnimation();
-        // Jump Animation
-        SetJumpingAnimation();
+        // Animation while being on air (Jump or fall)
+        SetOnAirAnimations();
 
     }
     void FixedUpdate()
@@ -96,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
                 isJumping = true;
                 jumpHoldTime = 0f;
                 rb.velocity = new Vector2(rb.velocity.x, 0);
-                animator.SetTrigger("jump");
             }
         }
         else if (ctx.canceled)
@@ -110,6 +111,14 @@ public class PlayerMovement : MonoBehaviour
         bool checkGroundOnRight = Physics2D.Raycast(groundCheckRight.position, Vector2.down, checkDistance, groundLayer);
         // If any of the checks gets true, then the player is touching the ground:
         isGrounded = checkGroundOnLeft || checkGroundOnRight;
+    }
+    void UpdateJumpState()
+    {
+        // Auto-stop jump if max hold time reached
+        if (isJumping && jumpHoldTime >= MAX_JUMP_HOLD_TIME)
+        {
+            isJumping = false;
+        }
     }
     void SetMovementSpeed()
     {
@@ -166,11 +175,19 @@ public class PlayerMovement : MonoBehaviour
         { animator.SetBool("isWalking", true); }
         else { animator.SetBool("isWalking", false); }
     }
-    void SetJumpingAnimation()
+    void SetOnAirAnimations()
     {
         if (isGrounded)
-        { animator.SetBool("isFalling", false); }
-        else { animator.SetBool("isFalling", true); }
+        {
+            animator.SetBool("isFalling", false);
+            animator.SetBool("isJumping", false);
+        }
+        else if (isJumping) { animator.SetBool("isJumping", true); }
+        else
+        {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", true);
+        }
     }
 
     // -------------------------- EDITOR HELPERS
