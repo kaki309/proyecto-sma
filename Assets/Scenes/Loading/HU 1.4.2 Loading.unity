@@ -1222,7 +1222,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingSlider: {fileID: 393972266}
   adviceText: {fileID: 1434254738}
-  advices: []
+  advices:
+  - Explora el mapa para descubrir secretos ocultos.
+  - "Administra tus recursos para sobrevivir m\xE1s tiempo."
+  - Mejora tus habilidades cuando sea posible.
+  - Mantente alerta y evita riesgos innecesarios.
+  - "Recuerda que no es necesario pedir permiso para ir al ba\xF1o."
   adviceChangeTime: 4
 --- !u!4 &1785618508
 Transform:
