@@ -536,6 +536,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4904554530525672342, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7500554924376433157, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
       propertyPath: m_Name
       value: PlayerPrefab
@@ -8460,7 +8464,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 10a055724d6a4aa4d8223ce57e096436, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
