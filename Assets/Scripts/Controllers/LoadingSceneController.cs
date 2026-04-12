@@ -37,9 +37,22 @@ public class LoadingSceneController : MonoBehaviour
             timer += Time.deltaTime;
             adviceTimer += Time.deltaTime;
 
-            // Progress bar update
-            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            loadingSlider.value = progress;
+            // Progress bar update with slow progression
+            float timeProgressRatio = timer / (loadingScreenTime * 0.8f); // 0 to 1 over 80% of loading time
+            float slowProgress = Mathf.Clamp01(timeProgressRatio * 0.6f); // Maps 0-1 to 0-0.6
+            float realProgress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+
+            // After 80% of loading time, smoothly transition to real progress
+            if (timer >= loadingScreenTime * 0.8f)
+            {
+                float remainingTime = loadingScreenTime * 0.2f;
+                float blendFactor = (timer - loadingScreenTime * 0.8f) / remainingTime;
+                loadingSlider.value = Mathf.Lerp(slowProgress, realProgress, blendFactor);
+            }
+            else
+            {
+                loadingSlider.value = slowProgress;
+            }
 
             // change advice
             if (adviceTimer >= adviceChangeTime)
