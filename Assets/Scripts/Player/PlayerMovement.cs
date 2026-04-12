@@ -15,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float moveMultiplierOnAir = 4;
 
     [Header("Jump")]
-    [SerializeField] float jumpForce = 20;
+    [SerializeField] float jumpForce = 5;
+    [SerializeField] float sustainedJumpForce = 4;
     [SerializeField] Transform groundCheckLeft;
     [SerializeField] Transform groundCheckRight;
     [SerializeField] float checkDistance = 0.12f;
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     bool isChangingMoveSpeed;
     bool isJumping;
+    bool hasAppliedJumpImpulse;
     float jumpHoldTime;
     const float MAX_JUMP_HOLD_TIME = 1f;
 
@@ -96,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded && !isJumping)
             {
                 isJumping = true;
+                hasAppliedJumpImpulse = false;
                 jumpHoldTime = 0f;
                 rb.velocity = new Vector2(rb.velocity.x, 0);
             }
@@ -149,9 +152,15 @@ public class PlayerMovement : MonoBehaviour
         // Apply jump force while holding button
         if (isJumping && jumpHoldTime < MAX_JUMP_HOLD_TIME)
         {
-            // Scale force down as time increases for linear height growth
-            float forceScale = 1f - (jumpHoldTime / MAX_JUMP_HOLD_TIME);
-            rb.AddForce(new Vector2(0, jumpForce * forceScale), ForceMode2D.Force);
+            // Apply initial impulse on first frame of jump
+            if (!hasAppliedJumpImpulse)
+            {
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                hasAppliedJumpImpulse = true;
+            }
+            
+            // Apply sustain force to extend jump
+            rb.AddForce(new Vector2(0, sustainedJumpForce), ForceMode2D.Force);
             jumpHoldTime += Time.fixedDeltaTime;
         }
     }
@@ -183,7 +192,8 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isJumping", false);
         }
         else if (isJumping) { animator.SetBool("isJumping", true); }
-        else
+        // Negative velocity means Falling
+        else if (rb.velocity.y < 0)
         {
             animator.SetBool("isJumping", false);
             animator.SetBool("isFalling", true);
