@@ -22,6 +22,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float checkDistance = 0.12f;
     [SerializeField] LayerMask groundLayer;
 
+    // Dust Effect
+    [Header("Effects")]
+    [SerializeField] private GameObject dustEffect;
+    
+
     // Interal variables
     InputSystem_Actions actions;
     Rigidbody2D rb;
@@ -34,6 +39,11 @@ public class PlayerMovement : MonoBehaviour
     bool hasAppliedJumpImpulse;
     float jumpHoldTime;
     const float MAX_JUMP_HOLD_TIME = 1f;
+
+    //Dust Effect
+    private bool wasGrounded;
+    bool hasLandedOnce = false;
+
 
     // -------------------------- UNITY METHODS
     void Awake()
@@ -63,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         _moveMultiplier = moveMultiplierOnGround;
+
     }
     void Update()
     {
@@ -78,6 +89,21 @@ public class PlayerMovement : MonoBehaviour
         SetWalkingAnimation();
         // Animation while being on air (Jump or fall)
         SetOnAirAnimations();
+        // Detect landing
+        if (!wasGrounded && isGrounded)
+        {
+            // Play dust effect only if the player has landed at least once before, to avoid playing it on the first spawn
+            if (hasLandedOnce)
+            {
+                PlayDust();
+            }
+            else
+            {
+                hasLandedOnce = true;
+            }
+        }
+
+        wasGrounded = isGrounded;
 
     }
     void FixedUpdate()
@@ -206,5 +232,19 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(groundCheckLeft.position, new Vector2(groundCheckLeft.position.x, groundCheckLeft.position.y - checkDistance));
         Gizmos.DrawLine(groundCheckRight.position, new Vector2(groundCheckRight.position.x, groundCheckRight.position.y - checkDistance));
+    }
+
+    // -------------------------- DUST EFFECT METHODS
+    void PlayDust()
+    {
+        if (dustEffect == null) return;
+
+        dustEffect.SetActive(true);
+        Invoke(nameof(DisableDust), 0.3f); // Ajusta según duración de la animación
+    }
+
+    void DisableDust()
+    {
+        dustEffect.SetActive(false);
     }
 }
