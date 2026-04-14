@@ -1,16 +1,18 @@
+using System.Collections;
 using UnityEngine;
 public class GameController : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField] private GameObject gameOverCanvas;
-
-    [Header("Scenes")]
-    [SerializeField] private string initialSceneName;
-
     public static GameController Instace { get; private set; }
 
+    [Header("UI")]
+    [SerializeField] GameObject gameOverCanvas;
+
+    [Header("Scenes")]
+    [SerializeField] string mainMenuSceneName = "MainMenu";
+    [SerializeField] string mainWorldSceneName = "MainWorld";
+
     // Internal Config
-    private Character currentCharacter;
+    Character currentCharacter;
 
     void Awake()
     {
@@ -24,38 +26,72 @@ public class GameController : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-
     void Start()
     {
-
+        gameOverCanvas.SetActive(false);
     }
-
-
-    void Update()
-    {
-
-    }
-
     public void SetCurrentCharacter(Character character)
     {
         currentCharacter = character;
         Debug.Log($"[GameController] Character {character} set in GameController");
-        //SceneController.Instance.ChangeScene(0);
-        //Andres aqui le estableci que cargue la escena con el loading screen, solo tienes que cambiar el nombre de la escena a cargar
-        SceneController.Instance.LoadSceneWithLoadingScreen("NombredeLaEscena");
+        SceneController.Instance.LoadSceneWithLoadingScreen(mainWorldSceneName);
+        // Wait 4 seconds to give time to the loadScreen
+        // And then activate the character's sprite
+        Invoke(nameof(ActivateCharacterSprite), 4);
     }
-
-
     public void GameOver()
     {
         Time.timeScale = 0f;
         gameOverCanvas.SetActive(true);
     }
-
-
     public void RestartGame()
     {
         Time.timeScale = 1f;
-        SceneController.Instance.LoadSceneWithLoadingScreen(initialSceneName);
+        SceneController.Instance.LoadSceneWithLoadingScreen(mainMenuSceneName);
+    }
+    // ----------------> Internal methods
+    void ActivateCharacterSprite() => StartCoroutine(SearchAndActivatePlayerSprite());
+    IEnumerator SearchAndActivatePlayerSprite()
+    {
+        // Find the player
+        GameObject player = null;
+        while (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            yield return null;
+        }
+
+        // Get the right sprite GameObject
+        var allChildren = player.GetComponentsInChildren<Transform>(true); // true => include inactive
+        GameObject sprite = null;
+
+        switch (currentCharacter)
+        {
+            case Character.Mateo:
+                foreach (var obj in allChildren)
+                {
+                    if (obj.CompareTag("MateoSprite"))
+                    {
+                        sprite = obj.gameObject;
+                        break;
+                    }
+                }
+                break;
+
+            case Character.Sara:
+                foreach (var obj in allChildren)
+                {
+                    if (obj.CompareTag("SaraSprite"))
+                    {
+                        sprite = obj.gameObject;
+                        break;
+                    }
+                }
+                break;
+        }
+        // Enable the sprite
+        sprite.SetActive(true);
+        // Finish the coroutine
+        yield break;
     }
 }

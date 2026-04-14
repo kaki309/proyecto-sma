@@ -37,21 +37,26 @@ public class LoadingSceneController : MonoBehaviour
             timer += Time.deltaTime;
             adviceTimer += Time.deltaTime;
 
-            // Progress bar update with slow progression
-            float timeProgressRatio = timer / (loadingScreenTime * 0.8f); // 0 to 1 over 80% of loading time
-            float slowProgress = Mathf.Clamp01(timeProgressRatio * 0.6f); // Maps 0-1 to 0-0.6
+            float timeToKeepProgressFixed = 6f;
+            float loadPercentageForFixedProgress = 40f;
+
+            float fixedTimeProgressRatio = timer / (loadingScreenTime * (timeToKeepProgressFixed / 10)); // this goes from 0 to 1 over timeToKeepProgressFixed seconds
+
+            float fixedProgress = Mathf.Clamp01(fixedTimeProgressRatio * (loadPercentageForFixedProgress / 100)); // Maps fixedTimeProgressRatio value (0:1) to 0-loadPercentageForFixedProgress (In decimal numbers)
+
             float realProgress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
 
-            // After 80% of loading time, smoothly transition to real progress
-            if (timer >= loadingScreenTime * 0.8f)
+            // After timeToKeepProgressFixed of loading time, smoothly transition to real progress
+            if (timer >= loadingScreenTime * (timeToKeepProgressFixed / 10))
             {
-                float remainingTime = loadingScreenTime * 0.2f;
-                float blendFactor = (timer - loadingScreenTime * 0.8f) / remainingTime;
-                loadingSlider.value = Mathf.Lerp(slowProgress, realProgress, blendFactor);
+                float remainingTime = loadingScreenTime * (1- timeToKeepProgressFixed/10);
+                float blendFactor = (timer - loadingScreenTime * (timeToKeepProgressFixed / 10)) / remainingTime;
+                
+                loadingSlider.value = Mathf.Lerp(fixedProgress, realProgress, blendFactor);
             }
             else
             {
-                loadingSlider.value = slowProgress;
+                loadingSlider.value = fixedProgress;
             }
 
             // change advice

@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -71,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>();
+        StartCoroutine(GetSpriteAnimator());
         _moveMultiplier = moveMultiplierOnGround;
 
     }
@@ -191,6 +189,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     // -------------------------- VISUAL CHANGES
+    IEnumerator GetSpriteAnimator()
+    {
+        Animator _anim = null;
+        while (_anim == null)
+        {
+            _anim = GetComponentInChildren<Animator>();
+            yield return null;
+        }
+        animator = _anim;
+        yield break;
+    }
     void SetSpriteDirection()
     {
         if (move < 0)
@@ -242,7 +251,6 @@ public class PlayerMovement : MonoBehaviour
         dustEffect.SetActive(true);
         Invoke(nameof(DisableDust), 0.3f); // Ajusta según duración de la animación
     }
-
     void DisableDust()
     {
         dustEffect.SetActive(false);

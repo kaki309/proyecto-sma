@@ -31,6 +31,7 @@ public class SceneController : MonoBehaviour
     public void LoadSceneWithLoadingScreen(string sceneName)
     {
         StartCoroutine(LoadLoadingScene(sceneName));
+        
     }
 
     // Corrutine
@@ -55,5 +56,6 @@ public class SceneController : MonoBehaviour
         {
             Debug.LogError("LoadingSceneController not found!");
         }
+        yield break;
     }
 }

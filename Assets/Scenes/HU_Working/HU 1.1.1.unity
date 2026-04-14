@@ -230,6 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03384c35aa496ae438e89a2014321711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverCanvas: {fileID: 0}
+  initialSceneName: 
 --- !u!4 &64148086
 Transform:
   m_ObjectHideFlags: 0
@@ -274,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80be53c8277e277409f12f8c7abb8d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingSceneName: LoadingScene
 --- !u!4 &1053771590
 Transform:
   m_ObjectHideFlags: 0
