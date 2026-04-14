@@ -1,6 +1,11 @@
 using UnityEngine;
 public class GameController : MonoBehaviour
 {
+    [Header("UI")]
+    [SerializeField] private GameObject gameOverCanvas;
+
+    [Header("Scenes")]
+    [SerializeField] private string initialSceneName;
 
     public static GameController Instace { get; private set; }
 
@@ -38,5 +43,19 @@ public class GameController : MonoBehaviour
         //SceneController.Instance.ChangeScene(0);
         //Andres aqui le estableci que cargue la escena con el loading screen, solo tienes que cambiar el nombre de la escena a cargar
         SceneController.Instance.LoadSceneWithLoadingScreen("NombredeLaEscena");
+    }
+
+
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        gameOverCanvas.SetActive(true);
+    }
+
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneController.Instance.LoadSceneWithLoadingScreen(initialSceneName);
     }
 }
