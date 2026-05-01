@@ -1,51 +1,72 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerHealth : Being
 {
-    public override int MaxHealth => 5;
+    public override int MaxHealth => _maxHealth;
+    [SerializeField] int _maxHealth = 5;
     public static event Action<int> OnDamageTaken;
     public static event Action OnPlayerDeath;
-    [SerializeField] PlayerMovement playerMovement;
+    Animator animator;
+
+    void Start()
+    {
+        StartCoroutine(GetAnimatorAsync());
+    }
 
     void OnEnable()
     {
-        playerMovement.OnFallEvent += HandleFallDamage;
+        PlayerMovement.OnLandingEvent += HandleFallDamage;
     }
 
     void OnDisable()
     {
-        playerMovement.OnFallEvent -= HandleFallDamage;
+        PlayerMovement.OnLandingEvent -= HandleFallDamage;
     }
 
     public override void TakeDamage(int damage = 1)
     {
         base.TakeDamage(damage);
+        animator.SetTrigger("takeDamage");
         OnDamageTaken?.Invoke(currentHealth);
     }
 
     protected override void Die()
     {
+        animator.SetTrigger("die");
         OnPlayerDeath?.Invoke();
-        // TODO: Handle death (game over screen, respawn, etc)
     }
 
     void HandleFallDamage(float fallSpeed)
     {
+        Debug.Log("Tomando daño");
+        float firstLimit = -9.0f;
+        float secondLimit = -11.0f;
+        float thirdLimit = -13.0f;
+        float fourthLimit = -16.0f;
+
+        // Not enough height to take damage
+        if (fallSpeed > firstLimit) return;
+
         int damage = 0;
 
-        if (fallSpeed < 2f)
-            damage = 0;
-        else if (fallSpeed < 10f)
-            damage = 1;
-        else if (fallSpeed < 14f)
-            damage = 2;
-        else if (fallSpeed < 18f)
-            damage = 4;
-        else
-            damage = MaxHealth;
+        if (fallSpeed <= firstLimit && fallSpeed > secondLimit) damage = 1;
+        if (fallSpeed <= secondLimit && fallSpeed > thirdLimit) damage = 2;
+        if (fallSpeed <= secondLimit && fallSpeed > thirdLimit) damage = 4;
+        if (fallSpeed <= fourthLimit) damage = _maxHealth;
 
-        Debug.Log("Fall damage: " + fallSpeed + ", Health: " + currentHealth);
         TakeDamage(damage);
+        Debug.Log("Daño tomado");
+    }
+    IEnumerator GetAnimatorAsync()
+    {
+        Animator _anim = null;
+        while (_anim == null)
+        {
+            _anim = GetComponentInChildren<Animator>();
+            yield return null;
+        }
+        animator = _anim;
     }
 }

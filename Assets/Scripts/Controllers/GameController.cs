@@ -41,6 +41,7 @@ public class GameController : MonoBehaviour
     }
     public void GameOver()
     {
+        PlayerHealth.OnPlayerDeath -= GameOver;
         Time.timeScale = 0f;
         gameOverCanvas.SetActive(true);
     }
@@ -50,8 +51,8 @@ public class GameController : MonoBehaviour
         SceneController.Instance.LoadSceneWithLoadingScreen(mainMenuSceneName);
     }
     // ----------------> Internal methods
-    void ActivateCharacterSprite() => StartCoroutine(SearchAndActivatePlayerSprite());
-    IEnumerator SearchAndActivatePlayerSprite()
+    void ActivateCharacterSprite() => StartCoroutine(SearchAndConfigurePlayer());
+    IEnumerator SearchAndConfigurePlayer()
     {
         // Find the player
         GameObject player = null;
@@ -60,6 +61,8 @@ public class GameController : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             yield return null;
         }
+
+        PlayerHealth.OnPlayerDeath += GameOver;
 
         // Get the right sprite GameObject
         var allChildren = player.GetComponentsInChildren<Transform>(true); // true => include inactive
