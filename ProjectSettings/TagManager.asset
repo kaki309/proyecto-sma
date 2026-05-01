@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MateoSprite
   - SaraSprite
+  - Ground
   layers:
   - Default
   - TransparentFX

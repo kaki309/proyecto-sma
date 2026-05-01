@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     // Dust Effect
     [Header("Effects")]
     [SerializeField] private GameObject dustEffect;
+
+    // Events
+    public Action<float> OnFallEvent;
     
 
     // Interal variables
@@ -37,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     bool hasAppliedJumpImpulse;
     float jumpHoldTime;
     const float MAX_JUMP_HOLD_TIME = 1f;
+    float lastFallSpeed;
 
     //Dust Effect
     private bool wasGrounded;
@@ -102,6 +107,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         wasGrounded = isGrounded;
+
+        if (!isGrounded && rb.velocity.y < 0)
+        {
+            lastFallSpeed = Mathf.Max(lastFallSpeed, Mathf.Abs(rb.velocity.y));
+            Debug.Log("Falling speed: " + lastFallSpeed);
+        }
 
     }
     void FixedUpdate()
@@ -235,6 +246,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Debug.Log("LANDING speed: " + lastFallSpeed);
+
+            if (lastFallSpeed > 5f && rb.velocity.y <= 0)
+            {
+                OnFallEvent?.Invoke(lastFallSpeed);
+            }
+
+            lastFallSpeed = 0f;
+        }
+    }
+
     // -------------------------- EDITOR HELPERS
     void OnDrawGizmosSelected()
     {
@@ -255,4 +281,5 @@ public class PlayerMovement : MonoBehaviour
     {
         dustEffect.SetActive(false);
     }
+
 }
