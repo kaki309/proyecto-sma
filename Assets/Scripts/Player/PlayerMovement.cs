@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -23,7 +25,10 @@ public class PlayerMovement : MonoBehaviour
     // Dust Effect
     [Header("Effects")]
     [SerializeField] private GameObject dustEffect;
-    
+
+    // Events
+    public static Action<float> OnLandingEvent;
+
 
     // Interal variables
     InputSystem_Actions actions;
@@ -32,16 +37,12 @@ public class PlayerMovement : MonoBehaviour
     float move;
     float _moveMultiplier;
     bool isGrounded;
+    bool hasLandedAlready = true;
     bool isChangingMoveSpeed;
     bool isJumping;
     bool hasAppliedJumpImpulse;
     float jumpHoldTime;
     const float MAX_JUMP_HOLD_TIME = 1f;
-
-    //Dust Effect
-    private bool wasGrounded;
-    bool hasLandedOnce = false;
-
 
     // -------------------------- UNITY METHODS
     void Awake()
@@ -77,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // Check for ground
         CheckGrounded();
+        // Check when is landing
+        CheckLandingAndInvokeInteractions();
         // Update jump state after max hold time has passed
         UpdateJumpState();
         // Set movement speed internal multiplier
@@ -87,22 +90,6 @@ public class PlayerMovement : MonoBehaviour
         SetWalkingAnimation();
         // Animation while being on air (Jump or fall)
         SetOnAirAnimations();
-        // Detect landing
-        if (!wasGrounded && isGrounded)
-        {
-            // Play dust effect only if the player has landed at least once before, to avoid playing it on the first spawn
-            if (hasLandedOnce)
-            {
-                PlayDust();
-            }
-            else
-            {
-                hasLandedOnce = true;
-            }
-        }
-
-        wasGrounded = isGrounded;
-
     }
     void FixedUpdate()
     {
@@ -138,6 +125,22 @@ public class PlayerMovement : MonoBehaviour
         bool checkGroundOnRight = Physics2D.Raycast(groundCheckRight.position, Vector2.down, checkDistance, groundLayer);
         // If any of the checks gets true, then the player is touching the ground:
         isGrounded = checkGroundOnLeft || checkGroundOnRight;
+    }
+    void CheckLandingAndInvokeInteractions()
+    {
+        if (!isGrounded)
+        {
+            hasLandedAlready = false;
+            return;
+        }
+
+        // If is grounded and hasnt landed already, it is landing
+        if (isGrounded && !hasLandedAlready)
+        {
+            hasLandedAlready = true;
+            OnLandingEvent?.Invoke(rb.velocity.y);
+            PlayDust();
+        }
     }
     void UpdateJumpState()
     {
@@ -182,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 hasAppliedJumpImpulse = true;
             }
-            
+
             // Apply sustain force to extend jump
             rb.AddForce(new Vector2(0, sustainedJumpForce), ForceMode2D.Force);
             jumpHoldTime += Time.fixedDeltaTime;
@@ -254,5 +257,11 @@ public class PlayerMovement : MonoBehaviour
     void DisableDust()
     {
         dustEffect.SetActive(false);
+    }
+
+    // -------------------------- OTHERS
+    void ResetLandingFlag()
+    {
+        hasLandedAlready = false;
     }
 }
