@@ -689,18 +689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b2bcb15706a2744b2e054bbe9e70b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 643694251}
---- !u!114 &643694251 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2146312952674865652, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
-  m_PrefabInstance: {fileID: 1510461925}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643694248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7db46b8e9a69a3419522e6d3df22f40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _maxHealth: 5
 --- !u!1 &656200537
 GameObject:
   m_ObjectHideFlags: 0
@@ -9513,6 +9502,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2692685495137747728, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356843375306506426, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4904554530525672342, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
