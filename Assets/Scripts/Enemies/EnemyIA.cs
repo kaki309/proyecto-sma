@@ -1,17 +1,19 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyIA : MonoBehaviour
 {
     [Header("Config")]
-    [SerializeField] float speed = 2f;
     [SerializeField] Transform patrolPointA;
     [SerializeField] Transform patrolPointB;
 
     GameObject player;
+    SpriteRenderer sprite;
+    NavMeshAgent agent;
     bool chase = false;
     bool isPatrolling = true;
     Vector3 startingPos;
-    Vector2 directionToPlayer;
+    Vector2 currentMovingDirection;
     Vector3 currentPatrolTarget;
 
     void Start()
@@ -19,15 +21,47 @@ public class EnemyIA : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         startingPos = transform.position;
         currentPatrolTarget = patrolPointA.position;
+        agent = GetComponent<NavMeshAgent>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
     void Update()
     {
         if (player == null) return;
 
-        CheckPlayerDirection();
+        UpdateMovingDirection();
         SetSpriteDirection();
+        HandleMovement();
+    }
 
+    void UpdateMovingDirection()
+    {
+        // Calculate direction to current target based on state
+        Vector3 targetPosition;
+        if (chase)
+        {
+            targetPosition = player.transform.position;
+        }
+        else if (isPatrolling)
+        {
+            targetPosition = currentPatrolTarget;
+        }
+        else
+        {
+            targetPosition = startingPos;
+        }
+
+        currentMovingDirection = (targetPosition - transform.position).normalized;
+    }
+    void SetSpriteDirection()
+    {
+        bool facingLeft = currentMovingDirection.x < 0;
+        sprite.flipX = facingLeft;
+    }
+    void HandleMovement()
+    {
         if (chase)
         {
             ChasePlayer();
@@ -45,41 +79,37 @@ public class EnemyIA : MonoBehaviour
             }
         }
     }
-
-    void CheckPlayerDirection()
-    {
-        directionToPlayer = (player.transform.position - transform.position).normalized;
-    }
     void Patrol()
     {
-        // Move towards current patrol target
-        transform.position = Vector2.MoveTowards(transform.position, currentPatrolTarget, speed * Time.deltaTime);
-
-        // Switch target when reaching current patrol point
-        if (Vector3.Distance(transform.position, currentPatrolTarget) < 0.1f)
+        if (agent != null && agent.isActiveAndEnabled)
         {
-            currentPatrolTarget = (currentPatrolTarget == patrolPointA.position) ? patrolPointB.position : patrolPointA.position;
+            agent.SetDestination(currentPatrolTarget);
+
+            // Switch target when reaching current patrol point
+            if (Vector3.Distance(transform.position, currentPatrolTarget) < 0.5f)
+            {
+                currentPatrolTarget = (currentPatrolTarget == patrolPointA.position) ? patrolPointB.position : patrolPointA.position;
+            }
         }
-    }
-    void SetSpriteDirection()
-    {
-        int spriteDirection = directionToPlayer.x < 0 ? -1 : 1;
-        Vector3 currentScale = transform.localScale;
-        currentScale.x = spriteDirection;
-        transform.localScale = currentScale;
     }
     void ChasePlayer()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        if (agent != null && agent.isActiveAndEnabled)
+        {
+            agent.SetDestination(player.transform.position);
+        }
     }
     void ReturnToOrigin()
     {
-        transform.position = Vector2.MoveTowards(transform.position, startingPos, speed * Time.deltaTime);
-
-        // When reached starting position, start patrolling
-        if (Vector3.Distance(transform.position, startingPos) < 0.1f)
+        if (agent != null && agent.isActiveAndEnabled)
         {
-            isPatrolling = true;
+            agent.SetDestination(startingPos);
+
+            // When reached starting position, start patrolling
+            if (Vector3.Distance(transform.position, startingPos) < 0.5f)
+            {
+                isPatrolling = true;
+            }
         }
     }
     void CheckLineOfSightToPlayer()
