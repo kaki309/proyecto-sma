@@ -1,46 +1,69 @@
 using UnityEngine;
-using TMPro; // Necesario para manejar TextMeshPro
+using TMPro;
 
-public class FearCounter : MonoBehaviour
+public class FearManager : MonoBehaviour
 {
-    [Header("Referencias")]
-    public TMP_Text textoContador;
 
-    [Header("Configuración")]
-    public float currentFear = 0f;
-    public float fearMultiplier = 1f;
+    public static FearManager Instance { get; private set; }
+
+    [Header("References")]
+    [SerializeField] private TMP_Text counterText;
+
+    [Header("Settings")]
+    [SerializeField] private float fearMultiplier = 1f;
+
+  
+    private float currentFear = 0f;
+
+    void Awake()
+    {
+       
+        if (Instance == null)
+        {
+            Instance = this;
+          
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Update()
     {
-        // 1. Aumentar el contador
+        
         currentFear += Time.deltaTime * fearMultiplier;
 
-        // 2. Lógica de conversión por divisiones
-        ActualizarInterfaz();
+       
+        UpdateInterface();
     }
 
-    void ActualizarInterfaz()
+    
+    public float GetCurrentFearCounter()
     {
-        if (textoContador != null)
+        return currentFear / 60f;
+    }
+
+    void UpdateInterface()
+    {
+        if (counterText != null)
         {
-            // Sacamos los minutos (división entera)
-            int minutos = Mathf.FloorToInt(currentFear / 60);
+            
+            int minutes = Mathf.FloorToInt(currentFear / 60);
 
-            // Sacamos el sobrante (módulo o resto) para los segundos
-            // Usamos Mathf.RoundToInt para el redondeo que pediste
-            float residuo = currentFear % 60;
-            int segundos = Mathf.RoundToInt(residuo);
+            
+            float remainder = currentFear % 60;
+            int seconds = Mathf.RoundToInt(remainder);
 
-            // Ajuste por si el redondeo de segundos llega a 60
-            if (segundos == 60)
+            
+            if (seconds == 60)
             {
-                minutos++;
-                segundos = 0;
+                minutes++;
+                seconds = 0;
             }
 
-            // 3. Unir como cadena en formato 00:00
-            // el ":D2" asegura que siempre tenga dos dígitos (ej: 05 en vez de 5)
-            textoContador.text = minutos.ToString("00") + ":" + segundos.ToString("00");
+            
+            counterText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
         }
     }
 }
