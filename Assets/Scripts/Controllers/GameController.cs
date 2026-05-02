@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
 
     // Internal Config
     Character currentCharacter;
+    GameObject playerObject = null;
 
     void Awake()
     {
@@ -42,30 +43,32 @@ public class GameController : MonoBehaviour
     public void GameOver()
     {
         PlayerHealth.OnPlayerDeath -= GameOver;
+        playerObject.GetComponent<PlayerMovement>().enabled = false;
         Time.timeScale = 0f;
-        gameOverCanvas.SetActive(true);
+        StartCoroutine(ChangeGameOverCanvasStateDelayed(true, 3f));
     }
     public void RestartGame()
     {
         Time.timeScale = 1f;
         SceneController.Instance.LoadSceneWithLoadingScreen(mainMenuSceneName);
+        StartCoroutine(ChangeGameOverCanvasStateDelayed(false, 1.5f));
     }
     // ----------------> Internal methods
     void ActivateCharacterSprite() => StartCoroutine(SearchAndConfigurePlayer());
     IEnumerator SearchAndConfigurePlayer()
     {
         // Find the player
-        GameObject player = null;
-        while (player == null)
+
+        while (playerObject == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            playerObject = GameObject.FindGameObjectWithTag("Player");
             yield return null;
         }
 
         PlayerHealth.OnPlayerDeath += GameOver;
 
         // Get the right sprite GameObject
-        var allChildren = player.GetComponentsInChildren<Transform>(true); // true => include inactive
+        var allChildren = playerObject.GetComponentsInChildren<Transform>(true); // true => include inactive
         GameObject sprite = null;
 
         switch (currentCharacter)
@@ -96,5 +99,10 @@ public class GameController : MonoBehaviour
         sprite.SetActive(true);
         // Finish the coroutine
         yield break;
+    }
+    IEnumerator ChangeGameOverCanvasStateDelayed(bool desiredState, float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        gameOverCanvas.SetActive(desiredState);
     }
 }
