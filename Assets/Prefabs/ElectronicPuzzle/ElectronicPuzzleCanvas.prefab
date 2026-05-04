@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 3955396960744967125}
   - component: {fileID: 5575997523940947363}
   - component: {fileID: 1666368889997300543}
+  - component: {fileID: 9195692603441026563}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -338,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8235294}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -355,6 +356,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &9195692603441026563
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968494794466794272}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1145699976656653444
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,13 +635,14 @@ GameObject:
   - component: {fileID: 6222635759610440065}
   - component: {fileID: 6811903326195810974}
   - component: {fileID: 9048439389353199805}
+  - component: {fileID: 2869653032983528342}
   m_Layer: 5
   m_Name: ElectronicPuzzleCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5631291051729757200
 RectTransform:
   m_ObjectHideFlags: 0
@@ -641,8 +655,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3955396960744967125}
   - {fileID: 5046085891681041270}
+  - {fileID: 3955396960744967125}
   - {fileID: 6613077574213021312}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -714,6 +728,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2869653032983528342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2444134602349616016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e98d732d2d592c458896b135aaae497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzleContainer: {fileID: 6613077574213021312}
+  blackPanel: {fileID: 9195692603441026563}
+  duration: 0.5
+  offsetY: 1500
 --- !u!1 &2852571372154081319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,7 +1053,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3848257688883593854}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

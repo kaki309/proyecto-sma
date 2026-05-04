@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -9,8 +8,10 @@ public class ElectronicPuzzle : MonoBehaviour
     [SerializeField] Image lightBulb;
     [SerializeField] Sprite[] lightBulbAnimationFrames;
     ElectronicBlock[] blocks;
+    PuzzleUI puzzleCanvas;
     void Start()
     {
+        puzzleCanvas = GetComponentInParent<PuzzleUI>();
         blocks = GetComponentsInChildren<ElectronicBlock>().OrderBy(block => block.Order).ToArray();
         foreach (ElectronicBlock block in blocks)
         {
@@ -23,10 +24,13 @@ public class ElectronicPuzzle : MonoBehaviour
         {
             if (!block.IsInRightPose) return;
         }
-        StartCoroutine(HightLightBlocks());
+        StartCoroutine(FinishPuzzle());
     }
-    IEnumerator HightLightBlocks()
+
+    // --------------------------------- ANIMATIONS
+    IEnumerator FinishPuzzle()
     {
+        // HightLight Blocks In Order
         foreach (ElectronicBlock block in blocks)
         {
             block.HighlightBlock();
@@ -38,5 +42,7 @@ public class ElectronicPuzzle : MonoBehaviour
             lightBulb.sprite = frame;
             yield return new WaitForSeconds(0.3f);
         }
+        yield return new WaitForSeconds(3f);
+        puzzleCanvas.Hide();
     }
 }
