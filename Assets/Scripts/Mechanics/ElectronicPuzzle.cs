@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +8,10 @@ public class ElectronicPuzzle : MonoBehaviour
 {
     [SerializeField] Image lightBulb;
     [SerializeField] Sprite[] lightBulbAnimationFrames;
-    [SerializeField] int[] blocksOrderForAnimation;
     ElectronicBlock[] blocks;
     void Start()
     {
-        blocks = GetComponentsInChildren<ElectronicBlock>();
+        blocks = GetComponentsInChildren<ElectronicBlock>().OrderBy(block => block.Order).ToArray();
         foreach (ElectronicBlock block in blocks)
         {
             block.SetMyparent(this);
@@ -27,10 +27,10 @@ public class ElectronicPuzzle : MonoBehaviour
     }
     IEnumerator HightLightBlocks()
     {
-        foreach (int index in blocksOrderForAnimation)
+        foreach (ElectronicBlock block in blocks)
         {
-            blocks[index].HighlightBlock();
-            yield return new WaitForSeconds(0.3f);
+            block.HighlightBlock();
+            yield return new WaitForSeconds(0.1f);
         }
         // Change bulb sprite like an animation
         foreach (Sprite frame in lightBulbAnimationFrames)
