@@ -5545,6 +5545,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ElectronicPuzzleCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2444134602349616016, guid: e348179de61413f44b97731e77ed7a4f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5631291051729757200, guid: e348179de61413f44b97731e77ed7a4f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
