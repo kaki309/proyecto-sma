@@ -10,7 +10,13 @@ public class SpawnPointSetter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.transform.position = spawnPoint.position;
+            PlayerSpawner.Instace.SetCurrentSpawnPoint(spawnPoint);
+            Invoke(nameof(x),4); 
+
+
         }
     }
+
+    void x() => PlayerSpawner.Instace.SpawnPlayerOnSpawnpoint();
+
 }
