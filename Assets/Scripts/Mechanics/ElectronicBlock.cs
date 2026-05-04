@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ElectronicBlock : MonoBehaviour
 {
     public bool IsInRightPose { get; private set; }
-    public int Order { get; private set; }
+    public int Order => _order;
     [SerializeField] int _order;
     [SerializeField] Sprite rightPosition;
     [SerializeField] Sprite blockHighlighted;
