@@ -7,10 +7,12 @@ public class ElectronicPuzzle : MonoBehaviour
 {
     [SerializeField] Image lightBulb;
     [SerializeField] Sprite[] lightBulbAnimationFrames;
+    [SerializeField] GameObject blockInteractionsPanel;
     ElectronicBlock[] blocks;
     PuzzleUI puzzleCanvas;
     void Start()
     {
+        blockInteractionsPanel.SetActive(false);
         puzzleCanvas = GetComponentInParent<PuzzleUI>();
         blocks = GetComponentsInChildren<ElectronicBlock>().OrderBy(block => block.Order).ToArray();
         foreach (ElectronicBlock block in blocks)
@@ -30,6 +32,7 @@ public class ElectronicPuzzle : MonoBehaviour
     // --------------------------------- ANIMATIONS
     IEnumerator FinishPuzzle()
     {
+        blockInteractionsPanel.SetActive(true);
         // HightLight Blocks In Order
         foreach (ElectronicBlock block in blocks)
         {
