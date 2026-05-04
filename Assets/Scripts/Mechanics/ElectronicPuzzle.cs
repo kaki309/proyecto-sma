@@ -7,7 +7,6 @@ public class ElectronicPuzzle : MonoBehaviour
     [SerializeField] Image lightBulb;
     [SerializeField] Sprite[] lightBulbAnimationFrames;
     ElectronicBlock[] blocks;
-    bool isPuzzleCompleted = false;
     void Start()
     {
         blocks = GetComponentsInChildren<ElectronicBlock>();
@@ -22,7 +21,6 @@ public class ElectronicPuzzle : MonoBehaviour
         {
             if (!block.IsInRightPose) return;
         }
-        isPuzzleCompleted = true;
         StartCoroutine(HightLightBlocks());
     }
     IEnumerator HightLightBlocks()
