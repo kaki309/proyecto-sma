@@ -22,18 +22,20 @@ public class ElectronicBlock : MonoBehaviour
         allSprites.AddRange(wrongPositions);
         setRandomRotation();
     }
-    public void RotateBlock()
-    {
-        image.sprite = allSprites[currentSpriteIndex + 1];
-        checkIfRightPose();
-        puzzleController.checkPuzzleState();
-    }
     void setRandomRotation()
     {
-        int random = Random.Range(0, allSprites.Count + 1);
+        int random = Random.Range(0, allSprites.Count);
         currentSpriteIndex = random;
-        image.sprite = allSprites[random];
+        image.sprite = allSprites[currentSpriteIndex];
         checkIfRightPose();
+    }
+    public void RotateBlock()
+    {
+        currentSpriteIndex += 1;
+        if (currentSpriteIndex == allSprites.Count) currentSpriteIndex = 0;
+        image.sprite = allSprites[currentSpriteIndex];
+        checkIfRightPose();
+        puzzleController.checkPuzzleState();
     }
     void checkIfRightPose()
     {
