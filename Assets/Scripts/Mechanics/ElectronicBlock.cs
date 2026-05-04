@@ -22,7 +22,7 @@ public class ElectronicBlock : MonoBehaviour
         allSprites.AddRange(wrongPositions);
         setRandomRotation();
     }
-    void rotateBlock()
+    public void RotateBlock()
     {
         image.sprite = allSprites[currentSpriteIndex + 1];
         checkIfRightPose();
