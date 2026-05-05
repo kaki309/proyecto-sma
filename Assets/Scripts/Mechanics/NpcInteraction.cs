@@ -1,30 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NpcInteraction : MonoBehaviour
+public class NpcInteraction : InteractablesForPlayer
 {
-    [SerializeField] private GameObject interactionButton;
-    // Start is called before the first frame update
-    void Start()
+    public override void Interact()
     {
-        interactionButton.SetActive(false);
+        Debug.Log("Log desde NPC");
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            interactionButton.SetActive(true);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            interactionButton.SetActive(false);
-        }
-    }
-
 }
