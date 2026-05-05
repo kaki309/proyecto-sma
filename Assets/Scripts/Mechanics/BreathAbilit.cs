@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BreathAbilit : MonoBehaviour
+public class BreathAbility : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
+    public GameObject spriteEnabled;
+    public GameObject spriteDisabled;
+
     void Start()
     {
-        
+     
+        if (spriteEnabled != null) spriteEnabled.SetActive(true);
+        if (spriteDisabled != null) spriteDisabled.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+   
+    public void UseAbility()
     {
-        
+       
+        if (spriteEnabled != null) spriteEnabled.SetActive(false);
+        if (spriteDisabled != null) spriteDisabled.SetActive(true);
     }
 }
