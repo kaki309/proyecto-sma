@@ -48,9 +48,9 @@ public class PuzzleUI : MonoBehaviour
         blackPanel.alpha = panelOpacity;
     }
 
-    public void Hide()
+    public IEnumerator Hide()
     {
-        StartCoroutine(AnimateOut());
+        yield return StartCoroutine(AnimateOut());
     }
 
     IEnumerator AnimateOut()
@@ -70,6 +70,8 @@ public class PuzzleUI : MonoBehaviour
             yield return null;
         }
 
-        gameObject.SetActive(false);
+        Invoke(nameof(DisableGameObject), 2f);
     }
+
+    void DisableGameObject() => gameObject.SetActive(false);
 }
