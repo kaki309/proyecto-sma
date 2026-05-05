@@ -39,14 +39,13 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
 
     void OnInteractPressed()
     {
-        // Si ya no puede interactuar → salir
         if (!CanInteract()) return;
 
         Interact();
 
         currentUses++;
 
-        // Si alcanzó el límite → desactivar
+        // After using this time, check again if is still interactable
         if (!CanInteract())
         {
             DisableInteraction();
