@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,18 +9,25 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
 
     [Header("World UI")]
     [SerializeField] private GameObject interactionCanvas;
+    [SerializeField] private float fadeDuration = 0.3f;
 
     private Button button;
+    private CanvasGroup canvasGroup;
+    private Coroutine currentFade;
 
     void Awake()
     {
         GetComponent<BoxCollider2D>().isTrigger = true;
 
         button = interactionCanvas.GetComponentInChildren<Button>(true);
+        canvasGroup = interactionCanvas.GetComponent<CanvasGroup>();
 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(Interact);
 
+        interactionCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
+
+        canvasGroup.alpha = 0f;
         interactionCanvas.SetActive(false);
     }
 
@@ -27,7 +35,8 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            interactionCanvas.SetActive(true);
+            if (currentFade != null) StopCoroutine(currentFade);
+            currentFade = StartCoroutine(FadeIn());
         }
     }
 
@@ -35,7 +44,43 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            interactionCanvas.SetActive(false);
+            if (currentFade != null) StopCoroutine(currentFade);
+            currentFade = StartCoroutine(FadeOut());
         }
+    }
+
+    IEnumerator FadeIn()
+    {
+        interactionCanvas.SetActive(true);
+
+        float t = 0f;
+
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float progress = t / fadeDuration;
+
+            canvasGroup.alpha = progress;
+            yield return null;
+        }
+
+        canvasGroup.alpha = 1f;
+    }
+
+    IEnumerator FadeOut()
+    {
+        float t = 0f;
+
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float progress = t / fadeDuration;
+
+            canvasGroup.alpha = 1f - progress;
+            yield return null;
+        }
+
+        canvasGroup.alpha = 0f;
+        interactionCanvas.SetActive(false);
     }
 }
