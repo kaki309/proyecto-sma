@@ -11,6 +11,12 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
     [SerializeField] private GameObject interactionCanvas;
     [SerializeField] private float fadeDuration = 0.3f;
 
+    [Header("Usage")]
+    [Tooltip("-1 = infinito")]
+    [SerializeField] private int maxUses = -1;
+
+    private int currentUses = 0;
+
     private Button button;
     private CanvasGroup canvasGroup;
     private Coroutine currentFade;
@@ -23,7 +29,7 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
         canvasGroup = interactionCanvas.GetComponent<CanvasGroup>();
 
         button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(Interact);
+        button.onClick.AddListener(OnInteractPressed);
 
         interactionCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
 
@@ -31,9 +37,39 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
         interactionCanvas.SetActive(false);
     }
 
+    void OnInteractPressed()
+    {
+        // Si ya no puede interactuar → salir
+        if (!CanInteract()) return;
+
+        Interact();
+
+        currentUses++;
+
+        // Si alcanzó el límite → desactivar
+        if (!CanInteract())
+        {
+            DisableInteraction();
+        }
+    }
+
+    bool CanInteract()
+    {
+        return maxUses < 0 || currentUses < maxUses;
+    }
+
+    void DisableInteraction()
+    {
+        button.interactable = false;
+
+        // Opcional: ocultar completamente
+        if (currentFade != null) StopCoroutine(currentFade);
+        currentFade = StartCoroutine(FadeOut());
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && CanInteract())
         {
             if (currentFade != null) StopCoroutine(currentFade);
             currentFade = StartCoroutine(FadeIn());

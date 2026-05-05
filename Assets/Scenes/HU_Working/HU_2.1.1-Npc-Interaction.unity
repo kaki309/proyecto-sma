@@ -9748,6 +9748,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2932820896997271701, guid: 91416bee05477c447b5dcaaf6502d942, type: 3}
+      propertyPath: maxUses
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3005824332608261586, guid: 91416bee05477c447b5dcaaf6502d942, type: 3}
       propertyPath: m_Name
       value: InteractableObject
