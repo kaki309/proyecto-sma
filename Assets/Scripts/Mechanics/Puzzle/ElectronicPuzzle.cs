@@ -8,6 +8,7 @@ public class ElectronicPuzzle : MonoBehaviour
     [SerializeField] Image lightBulb;
     [SerializeField] Sprite[] lightBulbAnimationFrames;
     [SerializeField] GameObject blockInteractionsPanel;
+    [SerializeField] Animator electricBoxAnimator;
     ElectronicBlock[] blocks;
     PuzzleUI puzzleCanvas;
     void Start()
@@ -48,6 +49,9 @@ public class ElectronicPuzzle : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
 
         yield return puzzleCanvas.Hide();
+
+        electricBoxAnimator.SetTrigger("fixBox");
+
         LabChallengeController.Instance.completePuzzle();
     }
 }
