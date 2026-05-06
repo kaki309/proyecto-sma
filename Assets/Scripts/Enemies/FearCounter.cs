@@ -63,7 +63,7 @@ public class FearManager : MonoBehaviour
             }
 
             
-            counterText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+            counterText.text = minutes.ToString("0") + ":" + seconds.ToString("00");
         }
     }
 }
