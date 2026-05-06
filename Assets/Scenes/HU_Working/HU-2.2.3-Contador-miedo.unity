@@ -340,6 +340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099400274}
+  - component: {fileID: 1099400275}
   m_Layer: 0
   m_Name: FearCounter
   m_TagString: Untagged
@@ -366,6 +367,20 @@ Transform:
   - {fileID: 215321522}
   m_Father: {fileID: 1493126812}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1099400275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099400273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b058f36bba1c9b74f9b55a94373f72d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  counterText: {fileID: 215321524}
+  fearMultiplier: 1
 --- !u!1 &1444645795
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +530,6 @@ GameObject:
   - component: {fileID: 1493126811}
   - component: {fileID: 1493126810}
   - component: {fileID: 1493126809}
-  - component: {fileID: 1493126813}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -606,20 +620,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1493126813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1493126808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b058f36bba1c9b74f9b55a94373f72d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counterText: {fileID: 215321524}
-  fearMultiplier: 1
 --- !u!1 &1582449035
 GameObject:
   m_ObjectHideFlags: 0
