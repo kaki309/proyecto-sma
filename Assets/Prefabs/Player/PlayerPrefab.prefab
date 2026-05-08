@@ -150,8 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7607b1de62942f2439e1684446eba393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 4591376625901617755}
-  smoothSpeed: 0.3
+  player: {fileID: 0}
+  smoothTime: 0.25
+  limitLeft: {fileID: 0}
 --- !u!1 &2339056870940644421
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,6 +399,7 @@ GameObject:
   - component: {fileID: 8703963488097358581}
   - component: {fileID: 345839507748924706}
   - component: {fileID: 2146312952674865652}
+  - component: {fileID: 6973698562165026510}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -552,6 +554,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   dustEffect: {fileID: 2586957109489530202}
+--- !u!114 &6973698562165026510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8308587561214421616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b2bcb15706a2744b2e054bbe9e70b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 5
 --- !u!1001 &4438120240712817478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -602,14 +617,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8757008151673006288, guid: a583090cbc6cc5c498baaf66457ec2d5, type: 3}
       propertyPath: m_Name
-      value: MateoSprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 8757008151673006288, guid: a583090cbc6cc5c498baaf66457ec2d5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8757008151673006288, guid: a583090cbc6cc5c498baaf66457ec2d5, type: 3}
-      propertyPath: m_TagString
       value: MateoSprite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -774,14 +781,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6283604040069330922, guid: b76adf1a4be98d9439ee09c852729043, type: 3}
       propertyPath: m_Name
-      value: SaraSprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 6283604040069330922, guid: b76adf1a4be98d9439ee09c852729043, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6283604040069330922, guid: b76adf1a4be98d9439ee09c852729043, type: 3}
-      propertyPath: m_TagString
       value: SaraSprite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
