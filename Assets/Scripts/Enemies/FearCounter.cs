@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI; // Necesario para manejar el componente Image
+using UnityEngine.UI;
 using TMPro;
 
 public class FearManager : MonoBehaviour
@@ -8,11 +8,11 @@ public class FearManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private TMP_Text counterText;
-    [SerializeField] private Image fearFillImage; // La imagen con color que se llenará
+    [SerializeField] private Image fearFillImage;
 
     [Header("Settings")]
-    [SerializeField] private float secondsPerPercent = 2f; // Cada cuántos segundos sube 1%
-    [SerializeField] private float maxFear = 100f; // El límite del miedo
+    [SerializeField] private float secondsPerPercent = 2f;
+    [SerializeField] private float maxFear = 100f;
 
     private float currentFearPercent = 0f;
     private float timer = 0f;
@@ -35,14 +35,11 @@ public class FearManager : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            
             if (timer >= secondsPerPercent)
             {
                 currentFearPercent += 1f;
-                timer = 0f; 
-
+                timer = 0f;
                 currentFearPercent = Mathf.Clamp(currentFearPercent, 0, maxFear);
-
                 UpdateInterface();
             }
         }
@@ -50,12 +47,10 @@ public class FearManager : MonoBehaviour
 
     void UpdateInterface()
     {
-        
         if (counterText != null)
         {
             counterText.text = currentFearPercent.ToString("0") + "%";
         }
-
 
         if (fearFillImage != null)
         {
@@ -67,4 +62,13 @@ public class FearManager : MonoBehaviour
     {
         return currentFearPercent;
     }
+
+    public void ReduceFear(float amount = 20f)
+    {
+        currentFearPercent -= amount;
+        currentFearPercent = Mathf.Clamp(currentFearPercent, 0, maxFear);
+        UpdateInterface();
+    }
+
+
 }
