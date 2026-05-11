@@ -3,7 +3,8 @@ using TMPro;
 using UnityEngine;
 
 public class NotificationController : MonoBehaviour
-{
+{   
+    public static NotificationController Instance {get; private set;}
     [SerializeField] RectTransform notificationBar;
     
     [SerializeField] TMP_Text notificationText;
@@ -14,7 +15,8 @@ public class NotificationController : MonoBehaviour
     Vector2 startPos;
 
     void Start()
-    {
+    {   
+        Instance = this;
         Setup();
         notificationText.text = "";
     }

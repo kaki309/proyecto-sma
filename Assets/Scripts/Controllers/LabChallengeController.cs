@@ -30,7 +30,7 @@ public class LabChallengeController : MonoBehaviour
     {
         if (completedPuzzles == puzzlesCount)
         {
-            Debug.Log("Todos los puzzles completados");
+            NotificationController.Instance.ShowNotification("Reto completado");
         }
     }
 }

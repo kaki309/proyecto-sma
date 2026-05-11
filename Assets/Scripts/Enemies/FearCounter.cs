@@ -14,6 +14,7 @@ public class FearManager : MonoBehaviour
     [SerializeField] private float secondsPerPercent = 2f;
     [SerializeField] private float maxFear = 100f;
 
+    private bool isTimerEnabled;
     private float currentFearPercent = 0f;
     private float timer = 0f;
 
@@ -28,9 +29,13 @@ public class FearManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    void Start()
+    {
+        isTimerEnabled = false;
+    }
     void Update()
     {
+        if (!isTimerEnabled) return;
         if (currentFearPercent < maxFear)
         {
             timer += Time.deltaTime;
@@ -44,6 +49,7 @@ public class FearManager : MonoBehaviour
             }
         }
     }
+    public void StartTimer() => isTimerEnabled = true;
 
     void UpdateInterface()
     {
@@ -69,6 +75,5 @@ public class FearManager : MonoBehaviour
         currentFearPercent = Mathf.Clamp(currentFearPercent, 0, maxFear);
         UpdateInterface();
     }
-
 
 }
