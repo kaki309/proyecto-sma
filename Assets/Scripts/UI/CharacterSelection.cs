@@ -18,6 +18,6 @@ public class CharacterSelection : MonoBehaviour
         }
         cheersTextBox.SetActive(true);
         yield return new WaitForSecondsRealtime(3.5f);
-        GameController.Instace.SetCurrentCharacter(character);
+        GameController.Instance.SetCurrentCharacter(character);
     }
 }

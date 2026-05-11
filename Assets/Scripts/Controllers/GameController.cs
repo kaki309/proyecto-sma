@@ -2,10 +2,11 @@ using System.Collections;
 using UnityEngine;
 public class GameController : MonoBehaviour
 {
-    public static GameController Instace { get; private set; }
+    public static GameController Instance { get; private set; }
 
     [Header("UI")]
     [SerializeField] GameObject gameOverCanvas;
+    [SerializeField] GameObject pauseCanvas;
 
     [Header("Scenes")]
     [SerializeField] string mainMenuSceneName = "MainMenu";
@@ -17,13 +18,13 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-        if (Instace != null && Instace != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            Instace = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
@@ -52,6 +53,20 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
         SceneController.Instance.LoadSceneWithLoadingScreen(mainMenuSceneName);
         StartCoroutine(ChangeGameOverCanvasStateDelayed(false, 1.5f));
+    }
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        pauseCanvas.SetActive(true);
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        pauseCanvas.SetActive(false);
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
     // ----------------> Internal methods
     void ActivateCharacterSprite() => StartCoroutine(SearchAndConfigurePlayer());
