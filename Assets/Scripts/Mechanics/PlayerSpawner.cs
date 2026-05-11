@@ -1,24 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
-{
+{   
+    [SerializeField] PlayerSpawnLocation[] spawnPoints;
     Transform currentSpawnPoint;
     GameObject player;
-    public static PlayerSpawner Instace { get; private set; }
+    public static PlayerSpawner Instance { get; private set; }
     void Awake()
     {
-        if (Instace != null && Instace != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instace = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        Instance = this;
     }
 
     void Start()
@@ -26,14 +17,38 @@ public class PlayerSpawner : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    public void SetCurrentSpawnPoint(Transform spawn)
+    public void SetCurrentSpawnPoint(WorldSpawnPoints spawn)
     {
-        currentSpawnPoint = spawn;
+        foreach (PlayerSpawnLocation spawnPoint in spawnPoints)
+        {
+            if (spawnPoint.type == spawn)
+            {   
+                currentSpawnPoint = spawnPoint.location;
+                return;
+            }
+        }
     }
 
-
-    public void SpawnPlayerOnSpawnpoint()
+    public void SpawnPlayerOnSpawnpoint(WorldSpawnPoints spawn)
     {
+        SetCurrentSpawnPoint(spawn);
         player.transform.position = currentSpawnPoint.position;
     }
+    public void SpawnPlayerOnLocation(Transform location)
+    {
+        player.transform.position = location.position;
+    }
+}
+public enum WorldSpawnPoints
+{
+    initial,
+    outsideLab,
+    outsidePtar
+}
+[System.Serializable]
+public class PlayerSpawnLocation
+{
+    public WorldSpawnPoints type;
+    public Transform location;
+
 }

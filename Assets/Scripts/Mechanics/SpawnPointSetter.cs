@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnPointSetter : MonoBehaviour
@@ -10,13 +8,7 @@ public class SpawnPointSetter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerSpawner.Instace.SetCurrentSpawnPoint(spawnPoint);
-            Invoke(nameof(x),4); 
-
-
+            PlayerSpawner.Instance.SpawnPlayerOnLocation(spawnPoint);
         }
     }
-
-    void x() => PlayerSpawner.Instace.SpawnPlayerOnSpawnpoint();
-
 }
