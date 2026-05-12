@@ -40,7 +40,6 @@ public class PlayerHealth : Being
 
     void HandleFallDamage(float fallSpeed)
     {
-        Debug.Log("Tomando daño");
         float firstLimit = -9.0f;
         float secondLimit = -11.0f;
         float thirdLimit = -13.0f;

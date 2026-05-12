@@ -58,6 +58,7 @@ public class PlayerCamera : MonoBehaviour
     }
     void ClampHeightToPlayer()
     {
-        transform.position = new Vector3(transform.position.x, player.position.y, transform.position.z);
+        Vector3 nextPos = new Vector3(transform.position.x, player.position.y, transform.position.z);
+        transform.position = Vector3.Slerp(transform.position, nextPos, smoothTime);
     }
 }

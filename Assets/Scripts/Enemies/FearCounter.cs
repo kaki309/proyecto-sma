@@ -48,6 +48,11 @@ public class FearManager : MonoBehaviour
                 UpdateInterface();
             }
         }
+        else
+        {
+            isTimerEnabled = false;
+            GameController.Instance.GameOver();
+        }
     }
     public void StartTimer() => isTimerEnabled = true;
 

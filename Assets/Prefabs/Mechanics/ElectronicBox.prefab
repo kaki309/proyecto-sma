@@ -217,7 +217,7 @@ MonoBehaviour:
   m_text: INTERACTUAR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aa22852e8f94ea74e867688f5ff779f2, type: 2}
-  m_sharedMaterial: {fileID: 6659110973331519622, guid: aa22852e8f94ea74e867688f5ff779f2, type: 2}
+  m_sharedMaterial: {fileID: -4495405317216647685, guid: aa22852e8f94ea74e867688f5ff779f2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

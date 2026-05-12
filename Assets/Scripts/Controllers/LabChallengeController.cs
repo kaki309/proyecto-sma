@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class LabChallengeController : MonoBehaviour
 {
     public static LabChallengeController Instance;
+    [SerializeField] GameObject winCanvas, orbsCounter;
     int completedPuzzles;
     int puzzlesCount;
     void Awake()
@@ -19,6 +21,7 @@ public class LabChallengeController : MonoBehaviour
 
     void Start()
     {
+        winCanvas.SetActive(false);
         puzzlesCount = GameObject.FindObjectsOfType<ElectronicPuzzle>(true).Length;
     }
     public void completePuzzle()
@@ -30,7 +33,15 @@ public class LabChallengeController : MonoBehaviour
     {
         if (completedPuzzles == puzzlesCount)
         {
-            NotificationController.Instance.ShowNotification("Reto completado");
+            StartCoroutine(winChallenge());
         }
+    }
+    IEnumerator winChallenge()
+    {
+        Time.timeScale = 0;
+        winCanvas.SetActive(true);
+        orbsCounter.SetActive(true);
+        yield return new WaitForSecondsRealtime(8f);
+        Time.timeScale = 1;
     }
 }
