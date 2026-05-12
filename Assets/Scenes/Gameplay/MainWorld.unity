@@ -1928,6 +1928,8 @@ MonoBehaviour:
   dialogueCanvas: {fileID: 1580582429}
   dialogueText: {fileID: 1003562316}
   dialogBoxImage: {fileID: 1573697094}
+  mateoDialogBox: {fileID: 21300000, guid: afb6e6a90c9ce9e09a20c4bff1f11b80, type: 3}
+  saraDialogBox: {fileID: 21300000, guid: 4c57b25a784c1eb0dac6dddb0008a4b7, type: 3}
 --- !u!4 &208418487
 Transform:
   m_ObjectHideFlags: 0
@@ -3768,7 +3770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8402176553798462226, guid: 8c80d3d6be1f2984589e4cea9b67e0ab, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9129700397168398539, guid: 8c80d3d6be1f2984589e4cea9b67e0ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25614,16 +25616,20 @@ MonoBehaviour:
   dialogues:
   - text: "\xA1Te he estado esperando! La distorsi\xF3n afect\xF3 los equipos del
       laboratorio y bloque\xF3 el sistema el\xE9ctrico del s\xF3tano."
+    who: 0
     sprite: {fileID: 21300000, guid: 021f5584a264de9fcbaa6fd4ec6fbb73, type: 3}
   - text: "Repara las cajas el\xE9ctricas que encontrar\xE1s en el camino para restablecer
       la energ\xEDa."
+    who: 0
     sprite: {fileID: 21300000, guid: 021f5584a264de9fcbaa6fd4ec6fbb73, type: 3}
   - text: "Si lo logras, obtendr\xE1s un recompensa que te ayudar\xE1 a restaurar
       el equilibrio del campus. "
+    who: 0
     sprite: {fileID: 21300000, guid: 021f5584a264de9fcbaa6fd4ec6fbb73, type: 3}
   - text: "Entendido\u2026 reparar\xE9 esas cajas para traer de vuelta la luz al
       laboratorio antes de que Phobos se adue\xF1e del lugar."
-    sprite: {fileID: 21300000, guid: afb6e6a90c9ce9e09a20c4bff1f11b80, type: 3}
+    who: 1
+    sprite: {fileID: 0}
 --- !u!61 &1741774681
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class NpcInteraction : InteractablesForPlayer
 {
-    [SerializeField] private DialogTextAndBoxSprit[] dialogues;
+    [SerializeField] private DialogAndWhoSay[] dialogues;
 
     public override void Interact()
     {

@@ -21,7 +21,7 @@ public class ElectronicBlock : MonoBehaviour
         image = GetComponent<Image>();
         allSprites.Add(rightPosition);
         allSprites.AddRange(wrongPositions);
-        //setRandomRotation();
+        setRandomRotation();
         checkIfRightPose();
     }
     void setRandomRotation()

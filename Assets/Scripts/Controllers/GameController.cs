@@ -32,6 +32,10 @@ public class GameController : MonoBehaviour
     {
         gameOverCanvas.SetActive(false);
     }
+    public Character GetCurrentCharacter()
+    {
+        return currentCharacter;
+    }
     public void SetCurrentCharacter(Character character)
     {
         currentCharacter = character;
