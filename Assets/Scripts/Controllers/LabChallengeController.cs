@@ -38,10 +38,11 @@ public class LabChallengeController : MonoBehaviour
     }
     IEnumerator winChallenge()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0f;
         winCanvas.SetActive(true);
         orbsCounter.SetActive(true);
-        yield return new WaitForSecondsRealtime(8f);
-        Time.timeScale = 1;
+        yield return new WaitForSecondsRealtime(6.5f);
+        winCanvas.SetActive(false);
+        Time.timeScale = 1f;
     }
 }
