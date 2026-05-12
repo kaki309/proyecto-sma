@@ -4,8 +4,10 @@ public class PlayerCamera : MonoBehaviour
 {
     [SerializeField] Transform player;
     [SerializeField] float smoothTime = 0.25f;
+    [SerializeField] bool enableVerticalMovement = false;
     [Header("World Limits")]
     [SerializeField] Transform limitLeft;
+    [SerializeField] bool ignoreLimits = false;
 
     // Internal params
     bool canFollowX;
@@ -24,9 +26,10 @@ public class PlayerCamera : MonoBehaviour
     {
         if (player == null) return;
 
-        BlockMovementOutsideLimits();
+        if (!ignoreLimits) BlockMovementOutsideLimits();
         SetDesiredPosition();
         MoveX();
+        if (enableVerticalMovement) ClampHeightToPlayer();
     }
     void BlockMovementOutsideLimits()
     {
@@ -52,5 +55,9 @@ public class PlayerCamera : MonoBehaviour
     {
         Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref cameraVelocity, smoothTime);
         transform.position = smoothedPosition;
+    }
+    void ClampHeightToPlayer()
+    {
+        transform.position = new Vector3(transform.position.x, player.position.y, transform.position.z);
     }
 }

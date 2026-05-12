@@ -619,14 +619,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MateoSprite
       objectReference: {fileID: 0}
-    - target: {fileID: 8757008151673006288, guid: a583090cbc6cc5c498baaf66457ec2d5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8757008151673006288, guid: a583090cbc6cc5c498baaf66457ec2d5, type: 3}
-      propertyPath: m_TagString
-      value: MateoSprite
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -789,14 +781,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6283604040069330922, guid: b76adf1a4be98d9439ee09c852729043, type: 3}
       propertyPath: m_Name
-      value: SaraSprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 6283604040069330922, guid: b76adf1a4be98d9439ee09c852729043, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6283604040069330922, guid: b76adf1a4be98d9439ee09c852729043, type: 3}
-      propertyPath: m_TagString
       value: SaraSprite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
