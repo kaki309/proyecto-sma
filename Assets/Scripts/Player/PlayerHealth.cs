@@ -56,7 +56,6 @@ public class PlayerHealth : Being
         if (fallSpeed <= fourthLimit) damage = _maxHealth;
 
         TakeDamage(damage);
-        Debug.Log("Daño tomado");
     }
     IEnumerator GetAnimatorAsync()
     {

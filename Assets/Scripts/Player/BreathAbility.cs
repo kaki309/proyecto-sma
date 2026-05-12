@@ -6,8 +6,8 @@ public class BreathAbility : MonoBehaviour
 
     [SerializeField] GameObject buttonEnabled;
     [SerializeField] GameObject buttonDisabled;
-    [SerializeField] float transitionTime;
-    [SerializeField] float abilityTime;
+    [SerializeField] float transitionTime = 1f;
+    [SerializeField] float abilityTime = 5f;
 
     void Start()
     {
@@ -27,8 +27,14 @@ public class BreathAbility : MonoBehaviour
         buttonEnabled.SetActive(true);
         buttonDisabled.SetActive(false);
     }
+    public void DisableAbility()
+    {
+        buttonEnabled.SetActive(false);
+        buttonDisabled.SetActive(true);
+    }
     IEnumerator slowTime()
     {
+        FearManager.Instance.ReduceFear(60f);
         float timer = 0f;
         while (timer < transitionTime)
         {
@@ -38,9 +44,8 @@ public class BreathAbility : MonoBehaviour
             yield return null;
         }
         Time.timeScale = 0.5f;
-        
         yield return new WaitForSecondsRealtime(abilityTime);
-        
+
         timer = 0f;
         while (timer < transitionTime)
         {

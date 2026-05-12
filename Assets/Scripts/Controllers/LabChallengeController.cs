@@ -4,7 +4,8 @@ using UnityEngine;
 public class LabChallengeController : MonoBehaviour
 {
     public static LabChallengeController Instance;
-    [SerializeField] GameObject winCanvas, orbsCounter;
+    [SerializeField] GameObject winCanvas, orbsCounter, npc;
+    [SerializeField] BreathAbility breathAbility;
     int completedPuzzles;
     int puzzlesCount;
     void Awake()
@@ -35,14 +36,24 @@ public class LabChallengeController : MonoBehaviour
         {
             StartCoroutine(winChallenge());
         }
+        else
+        {
+            FearManager.Instance.ReduceFear(10f);
+            NotificationController.Instance.ShowNotification("Caja eléctrica arreglada");
+        }
     }
     IEnumerator winChallenge()
     {
-        Time.timeScale = 0f;
         winCanvas.SetActive(true);
+        npc.SetActive(false);
+        FearManager.Instance.ReduceFear(100f, true);
+        FearManager.Instance.ChangeTimerState(false);
         orbsCounter.SetActive(true);
+        breathAbility.DisableAbility();
+        Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(6.5f);
-        winCanvas.SetActive(false);
         Time.timeScale = 1f;
+        PlayerSpawner.Instance.SpawnPlayerOnSpawnpoint(WorldSpawnPoints.outsideLab);
+        winCanvas.SetActive(false);
     }
 }

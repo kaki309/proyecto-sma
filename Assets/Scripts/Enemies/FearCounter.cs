@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class FearManager : MonoBehaviour
 {
@@ -11,9 +12,9 @@ public class FearManager : MonoBehaviour
     [SerializeField] private Image fearFillImage;
 
     [Header("Settings")]
-    [SerializeField] private float secondsPerPercent = 2f;
-    [SerializeField] private float maxFear = 100f;
+    [SerializeField] private float secondsPerPercent = 1.6f;
 
+    private float maxFear = 100f;
     private bool isTimerEnabled;
     private float currentFearPercent = 0f;
     private float timer = 0f;
@@ -74,11 +75,43 @@ public class FearManager : MonoBehaviour
         return currentFearPercent;
     }
 
-    public void ReduceFear(float amount = 20f)
+    public void ReduceFear(float amount = 20f, bool instantly = false)
     {
-        currentFearPercent -= amount;
-        currentFearPercent = Mathf.Clamp(currentFearPercent, 0, maxFear);
-        UpdateInterface();
+        if (amount > currentFearPercent) amount = currentFearPercent;
+
+        if (instantly)
+        {
+            currentFearPercent -= amount;
+            UpdateInterface();
+        }
+        else
+        {
+            StartCoroutine(ReduceFearAnimation(amount));
+        }
     }
 
+    private IEnumerator ReduceFearAnimation(float amount)
+    {
+        float timer = 0f;
+        float animationDuration = 3f;
+        float startFear = currentFearPercent;
+        float targetFear = startFear - amount;
+
+        isTimerEnabled = false;
+        while (timer < animationDuration)
+        {
+            timer += Time.deltaTime;
+            float progress = timer / animationDuration;
+            currentFearPercent = Mathf.Lerp(startFear, targetFear, progress);
+            currentFearPercent = Mathf.Clamp(currentFearPercent, 0, maxFear);
+            UpdateInterface();
+            yield return null;
+        }
+
+        currentFearPercent = targetFear;
+        currentFearPercent = Mathf.Clamp(currentFearPercent, 0, maxFear);
+        UpdateInterface();
+        isTimerEnabled = true;
+    }
+    public void ChangeTimerState(bool desiredState) => isTimerEnabled = desiredState;
 }

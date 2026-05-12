@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   counterText: {fileID: 4274630853163400317}
   fearFillImage: {fileID: 870540052789502844}
-  secondsPerPercent: 2
+  secondsPerPercent: 1.6
   maxFear: 100
 --- !u!1 &1021573684837225644
 GameObject:

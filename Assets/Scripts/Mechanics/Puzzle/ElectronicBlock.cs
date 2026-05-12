@@ -21,14 +21,14 @@ public class ElectronicBlock : MonoBehaviour
         image = GetComponent<Image>();
         allSprites.Add(rightPosition);
         allSprites.AddRange(wrongPositions);
-        setRandomRotation();
+        //setRandomRotation();
+        checkIfRightPose();
     }
     void setRandomRotation()
     {
         int random = Random.Range(0, allSprites.Count);
         currentSpriteIndex = random;
         image.sprite = allSprites[currentSpriteIndex];
-        checkIfRightPose();
     }
     public void RotateBlock()
     {
