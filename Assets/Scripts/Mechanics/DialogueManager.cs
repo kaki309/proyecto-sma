@@ -1,29 +1,46 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TextMeshProUGUI dialogueText; 
+    [SerializeField] private GameObject dialogueCanvas;
+    [SerializeField] private TMP_Text dialogueText;
+    [SerializeField] private Image dialogBoxImage;
 
-    // Start is called before the first frame update
-    void Start()
+    private string[] currentDialogues;
+    private int currentDialogueIndex;
+
+    private void Start()
     {
-        dialoguePanel.SetActive(false);
+        dialogueCanvas.SetActive(false);
     }
 
-    public void ShowDialogue(string dialogue)
+    public void StartDialogue(string[] dialogues, Sprite dialogBoxSprite)
     {
-        dialoguePanel.SetActive(true);
-        dialogueText.text = dialogue;
+        currentDialogues = dialogues;
+        currentDialogueIndex = 0;
+        dialogBoxImage.sprite = dialogBoxSprite;
+
+        dialogueCanvas.SetActive(true);
+        dialogueText.text = currentDialogues[currentDialogueIndex];
+    }
+
+    public void NextDialogue()
+    {
+        currentDialogueIndex++;
+
+        if (currentDialogueIndex >= currentDialogues.Length)
+        {
+            HideDialogue();
+            return;
+        }
+
+        dialogueText.text = currentDialogues[currentDialogueIndex];
     }
 
     public void HideDialogue()
     {
-        dialoguePanel.SetActive(false);
+        dialogueCanvas.SetActive(false);
     }
-
 }
