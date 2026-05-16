@@ -1,11 +1,11 @@
-using System.ComponentModel;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
-{   
+{
     [SerializeField] PlayerSpawnLocation[] spawnPoints;
     Transform currentSpawnPoint;
     GameObject player;
+    Rigidbody2D playerRb;
     public static PlayerSpawner Instance { get; private set; }
     void Awake()
     {
@@ -15,6 +15,7 @@ public class PlayerSpawner : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerRb = player.GetComponent<Rigidbody2D>();
     }
 
     public void SetCurrentSpawnPoint(WorldSpawnPoints spawn)
@@ -22,21 +23,35 @@ public class PlayerSpawner : MonoBehaviour
         foreach (PlayerSpawnLocation spawnPoint in spawnPoints)
         {
             if (spawnPoint.type == spawn)
-            {   
+            {
                 currentSpawnPoint = spawnPoint.location;
                 return;
             }
         }
     }
-
+    public void SetCurrentSpawnPoint(Transform location)
+    {
+        currentSpawnPoint = location;
+    }
     public void SpawnPlayerOnSpawnpoint(WorldSpawnPoints spawn)
     {
-        SetCurrentSpawnPoint(spawn);
-        player.transform.position = currentSpawnPoint.position;
+        foreach (PlayerSpawnLocation spawnPoint in spawnPoints)
+        {
+            if (spawnPoint.type == spawn)
+            {
+                ChangePlayerPos(spawnPoint.location);
+                return;
+            }
+        }
     }
     public void SpawnPlayerOnLocation(Transform location)
     {
+        ChangePlayerPos(location);
+    }
+    void ChangePlayerPos(Transform location)
+    {
         player.transform.position = location.position;
+        playerRb.velocity = new Vector2(0, 0);
     }
 }
 public enum WorldSpawnPoints
