@@ -9,7 +9,7 @@ public class Void : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<PlayerHealth>().TakeDamage();
-            PlayerSpawner.Instance.SpawnPlayerOnSpawnpoint(pointToSpawn);
+            PlayerSpawner.Instance.SpawnPlayerOnWorldSpawnpoint(pointToSpawn);
         }
     }
 }

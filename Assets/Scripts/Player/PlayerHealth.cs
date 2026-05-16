@@ -28,22 +28,24 @@ public class PlayerHealth : Being
     public override void TakeDamage(int damage = 1)
     {
         base.TakeDamage(damage);
-        animator.SetTrigger("takeDamage");
         OnDamageTaken?.Invoke(currentHealth);
+        if (!IsAlive) return;
+        animator.SetTrigger("takeDamage");
+        PlayerSpawner.Instance.SpawnPlayerOnCurrentSpawnPoint();
     }
 
     protected override void Die()
     {
-        animator.SetTrigger("die");
         OnPlayerDeath?.Invoke();
+        animator.SetTrigger("die");
     }
 
     void HandleFallDamage(float fallSpeed)
     {
-        float firstLimit = -9.0f;
-        float secondLimit = -11.0f;
-        float thirdLimit = -13.0f;
-        float fourthLimit = -16.0f;
+        float firstLimit = -11.0f;
+        float secondLimit = -15.0f;
+        float thirdLimit = -18.0f;
+        float fourthLimit = -20.0f;
 
         // Not enough height to take damage
         if (fallSpeed > firstLimit) return;

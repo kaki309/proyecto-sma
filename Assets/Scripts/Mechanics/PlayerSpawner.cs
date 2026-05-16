@@ -7,17 +7,18 @@ public class PlayerSpawner : MonoBehaviour
     GameObject player;
     Rigidbody2D playerRb;
     public static PlayerSpawner Instance { get; private set; }
+
     void Awake()
     {
         Instance = this;
     }
-
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
+        SetCurrentSpawnPoint(WorldSpawnPoints.initial);
     }
-
+    // SET SPAWNPOINT BASED ON WORLD LOCATIONS
     public void SetCurrentSpawnPoint(WorldSpawnPoints spawn)
     {
         foreach (PlayerSpawnLocation spawnPoint in spawnPoints)
@@ -29,11 +30,17 @@ public class PlayerSpawner : MonoBehaviour
             }
         }
     }
+    // SET SPAWNPOINT BASED ON TRANSFORM
     public void SetCurrentSpawnPoint(Transform location)
     {
         currentSpawnPoint = location;
     }
-    public void SpawnPlayerOnSpawnpoint(WorldSpawnPoints spawn)
+    #region Spawners API
+    public void SpawnPlayerOnCurrentSpawnPoint()
+    {
+        ChangePlayerPos(currentSpawnPoint);
+    }
+    public void SpawnPlayerOnWorldSpawnpoint(WorldSpawnPoints spawn)
     {
         foreach (PlayerSpawnLocation spawnPoint in spawnPoints)
         {
@@ -48,6 +55,8 @@ public class PlayerSpawner : MonoBehaviour
     {
         ChangePlayerPos(location);
     }
+    #endregion
+
     void ChangePlayerPos(Transform location)
     {
         player.transform.position = location.position;
@@ -56,6 +65,7 @@ public class PlayerSpawner : MonoBehaviour
 }
 public enum WorldSpawnPoints
 {
+    none,
     initial,
     outsideLab,
     outsidePtar
