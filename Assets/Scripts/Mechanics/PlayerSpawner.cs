@@ -1,12 +1,14 @@
+using System;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] PlayerSpawnLocation[] spawnPoints;
+    public PlayerSpawnLocation[] spawnPoints;
     Transform currentSpawnPoint;
     GameObject player;
     Rigidbody2D playerRb;
     public static PlayerSpawner Instance { get; private set; }
+    public static Action<Transform> OnSpawnPointChanged;
 
     void Awake()
     {
@@ -26,6 +28,7 @@ public class PlayerSpawner : MonoBehaviour
             if (spawnPoint.type == spawn)
             {
                 currentSpawnPoint = spawnPoint.location;
+                OnSpawnPointChanged?.Invoke(currentSpawnPoint);
                 return;
             }
         }
@@ -34,6 +37,7 @@ public class PlayerSpawner : MonoBehaviour
     public void SetCurrentSpawnPoint(Transform location)
     {
         currentSpawnPoint = location;
+        OnSpawnPointChanged?.Invoke(currentSpawnPoint);
     }
     #region Spawners API
     public void SpawnPlayerOnCurrentSpawnPoint()

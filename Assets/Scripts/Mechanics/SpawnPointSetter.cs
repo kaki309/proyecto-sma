@@ -1,3 +1,4 @@
+using Onigwrap;
 using UnityEngine;
 
 public class SpawnPointSetter : MonoBehaviour
@@ -5,10 +6,19 @@ public class SpawnPointSetter : MonoBehaviour
     [Header("SpawnPoint (Use only one)")]
     public Transform spawnPoint;
     public WorldSpawnPoints worldSpawn;
-
+    [SerializeField] GameObject boardSprite;
+    void OnEnable()
+    {
+        PlayerSpawner.OnSpawnPointChanged += turnOffBoardSprite;
+    }
+    void OnDisable()
+    {
+        PlayerSpawner.OnSpawnPointChanged -= turnOffBoardSprite;
+    }
     void Start()
     {
         GetComponent<Collider2D>().isTrigger = true;
+        boardSprite.SetActive(false);
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -27,6 +37,26 @@ public class SpawnPointSetter : MonoBehaviour
                 }
                 PlayerSpawner.Instance.SetCurrentSpawnPoint(worldSpawn);
             }
+            boardSprite.SetActive(true);
         }
+    }
+    void turnOffBoardSprite(Transform currentSpawnPoint)
+    {
+        if (spawnPoint != null)
+        {
+            if (currentSpawnPoint == spawnPoint) return;
+        }
+        else
+        {
+            foreach (PlayerSpawnLocation spawn in PlayerSpawner.Instance.spawnPoints)
+            {
+                if (worldSpawn == spawn.type)
+                {
+                    if (currentSpawnPoint == spawn.location) return;
+                }
+            }
+        }
+
+        boardSprite.SetActive(false);
     }
 }
