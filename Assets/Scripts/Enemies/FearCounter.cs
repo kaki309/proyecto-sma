@@ -77,6 +77,7 @@ public class FearManager : MonoBehaviour
 
     public void ReduceFear(float amount = 20f, bool instantly = false)
     {
+        if (!isTimerEnabled) return;
         if (amount > currentFearPercent) amount = currentFearPercent;
 
         if (instantly)
