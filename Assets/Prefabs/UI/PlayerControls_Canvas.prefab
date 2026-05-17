@@ -631,5 +631,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonEnabled: {fileID: 7463961444030594979}
   buttonDisabled: {fileID: 1065907259290557328}
+  vfx: {fileID: 0}
   transitionTime: 1
-  abilityTime: 5
+  abilityTime: 10

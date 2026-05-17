@@ -6,8 +6,9 @@ public class BreathAbility : MonoBehaviour
 
     [SerializeField] GameObject buttonEnabled;
     [SerializeField] GameObject buttonDisabled;
+    [SerializeField] GameObject vfx;
     [SerializeField] float transitionTime = 1f;
-    [SerializeField] float abilityTime = 5f;
+    [SerializeField] float abilityTime = 10f;
 
     void Start()
     {
@@ -34,11 +35,12 @@ public class BreathAbility : MonoBehaviour
     }
     IEnumerator slowTime()
     {
+        vfx.SetActive(true);
         FearManager.Instance.ReduceFear(60f);
         float timer = 0f;
         while (timer < transitionTime)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             float progress = timer / transitionTime;
             Time.timeScale = Mathf.Lerp(1f, 0.5f, progress);
             yield return null;
@@ -49,11 +51,12 @@ public class BreathAbility : MonoBehaviour
         timer = 0f;
         while (timer < transitionTime)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             float progress = timer / transitionTime;
             Time.timeScale = Mathf.Lerp(0.5f, 1f, progress);
             yield return null;
         }
         Time.timeScale = 1f;
+        vfx.SetActive(false);
     }
 }
