@@ -243,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
         if (dustEffect == null) return;
 
         dustEffect.SetActive(true);
-        Invoke(nameof(DisableDust), 0.3f); // Ajusta según duración de la animación
+        Invoke(nameof(DisableDust), 1f);
     }
     void DisableDust()
     {
