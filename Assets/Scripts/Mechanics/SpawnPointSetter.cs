@@ -1,4 +1,3 @@
-using Onigwrap;
 using UnityEngine;
 
 public class SpawnPointSetter : MonoBehaviour
