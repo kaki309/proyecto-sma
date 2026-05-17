@@ -53,7 +53,7 @@ public class LabChallengeController : MonoBehaviour
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(6.5f);
         Time.timeScale = 1f;
-        PlayerSpawner.Instance.SpawnPlayerOnWorldSpawnpoint(WorldSpawnPoints.outsideLab);
+        PlayerSpawner.Instance.SpawnPlayerOnCurrentSpawnPoint();
         winCanvas.SetActive(false);
     }
 }

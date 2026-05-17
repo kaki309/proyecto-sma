@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ElectronicPuzzle : MonoBehaviour
@@ -9,6 +10,7 @@ public class ElectronicPuzzle : MonoBehaviour
     [SerializeField] Sprite[] lightBulbAnimationFrames;
     [SerializeField] GameObject blockInteractionsPanel;
     [SerializeField] Animator electricBoxAnimator;
+    [SerializeField] UnityEvent OnPuzzleFinished;
     ElectronicBlock[] blocks;
     PuzzleUI puzzleCanvas;
     void Start()
@@ -53,5 +55,6 @@ public class ElectronicPuzzle : MonoBehaviour
         electricBoxAnimator.SetTrigger("fixBox");
 
         LabChallengeController.Instance.completePuzzle();
+        OnPuzzleFinished?.Invoke();
     }
 }
