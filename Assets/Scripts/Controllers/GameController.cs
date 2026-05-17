@@ -47,16 +47,19 @@ public class GameController : MonoBehaviour
     }
     public void GameOver()
     {
-        playerObject.GetComponent<PlayerMovement>().enabled = false;
+        Time.timeScale = 1f;
         StartCoroutine(ChangeGameOverCanvasStateDelayed(true, 3f));
     }
     public void RestartGame()
     {
+        Time.timeScale = 1f;
         SceneController.Instance.LoadSceneWithLoadingScreen(mainMenuSceneName);
         StartCoroutine(ChangeGameOverCanvasStateDelayed(false, 1.5f));
+        StartCoroutine(ChangePauseCanvasStateDelayed(false, 1.5f));
     }
     public void RetryGame()
     {
+        Time.timeScale = 1f;
         SceneController.Instance.LoadSceneWithLoadingScreen(mainWorldSceneName);
         StartCoroutine(ChangeGameOverCanvasStateDelayed(false, 0.25f));
         Invoke(nameof(ActivateCharacterSprite), 3);
@@ -73,6 +76,7 @@ public class GameController : MonoBehaviour
     }
     public void QuitGame()
     {
+        Time.timeScale = 1f;
         Application.Quit();
     }
     // ----------------> Internal methods
@@ -126,5 +130,10 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(time);
         gameOverCanvas.SetActive(desiredState);
+    }
+    IEnumerator ChangePauseCanvasStateDelayed(bool desiredState, float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        pauseCanvas.SetActive(desiredState);
     }
 }

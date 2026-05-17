@@ -119530,10 +119530,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4904554530525672342, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7500554924376433157, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
       propertyPath: m_Name
       value: PlayerPrefab
@@ -119551,16 +119547,8 @@ PrefabInstance:
       value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7547343128479047914, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
-      propertyPath: smoothSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7547343128479047914, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
       propertyPath: enableVerticalMovement
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7847917110376118074, guid: 49f19585ecb1fe34bb205cf4822e3b1d, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -122596,11 +122584,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 935448841}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 870, y: 450}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -40, y: -40}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1905109303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124521,11 +124509,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3427463753083907794, guid: d7117e1e53a7c8440b7262fbad9effdd, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 3427463753083907794, guid: d7117e1e53a7c8440b7262fbad9effdd, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3427463753083907794, guid: d7117e1e53a7c8440b7262fbad9effdd, type: 3}
       propertyPath: m_LocalPosition.x
