@@ -1731,10 +1731,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOver_Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1240474941886310413, guid: ab404552ba4c6b045af3a42587d554b5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 4482485971315359628, guid: ab404552ba4c6b045af3a42587d554b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1605238546}
     - target: {fileID: 5797179152004973932, guid: ab404552ba4c6b045af3a42587d554b5, type: 3}
       propertyPath: m_Pivot.x
       value: 0

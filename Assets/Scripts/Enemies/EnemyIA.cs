@@ -12,6 +12,7 @@ public class EnemyIA : MonoBehaviour
     NavMeshAgent agent;
     bool chase = false;
     bool isPatrolling = true;
+    public bool IsDead = false;
     Vector3 startingPos;
     Vector2 currentMovingDirection;
     Vector3 currentPatrolTarget;
@@ -30,6 +31,11 @@ public class EnemyIA : MonoBehaviour
     void Update()
     {
         if (player == null) return;
+        if (IsDead)
+        {
+            agent.isStopped = true;
+            return;
+        }
 
         UpdateMovingDirection();
         SetSpriteDirection();

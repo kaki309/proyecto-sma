@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3091843963972873610}
-  - component: {fileID: 3151520191504463657}
   - component: {fileID: 278772647599353458}
   - component: {fileID: 969574433669057737}
   - component: {fileID: 4328822247613045884}
@@ -70,33 +69,6 @@ Transform:
   - {fileID: 2725469510258687117}
   m_Father: {fileID: 1038983281514002698}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &3151520191504463657
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3439454989355503796}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!58 &278772647599353458
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -131,7 +103,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 5.1126847
+  m_Radius: 3.773256
 --- !u!114 &969574433669057737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolPointA: {fileID: 2806311506394759146}
   patrolPointB: {fileID: 6868989265788698943}
+  IsDead: 0
 --- !u!195 &4328822247613045884
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -155,7 +128,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3439454989355503796}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
+  m_Radius: 0.25
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -164,10 +137,10 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 0.65
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 3
+  m_ObstacleAvoidanceType: 2
 --- !u!1 &3789030830395207871
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,9 +323,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 1
-  colliders:
-  - {fileID: 7474960656122319132}
+  collidersToDisable:
   - {fileID: 5822439522223672205}
+  - {fileID: 7474960656122319132}
+  iaController: {fileID: 969574433669057737}
+  gravityScale: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &4663537392593934437
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +461,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 236b5ccfde0ba254a9e5e1195a51ebd9, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -620,7 +598,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 35577c2a1d1dfe143ae93dc57c4b0b67, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

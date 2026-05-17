@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     bool hasAppliedJumpImpulse;
     float jumpHoldTime;
     const float MAX_JUMP_HOLD_TIME = 1f;
+    bool isPlayerDead;
 
     // -------------------------- UNITY METHODS
     void Awake()
@@ -58,24 +59,22 @@ public class PlayerMovement : MonoBehaviour
         // Jump
         actions.Player.Jump.performed += PerformJump;
         actions.Player.Jump.canceled += PerformJump;
+
+        PlayerHealth.OnPlayerDeath += changePlayerLifeStateToDead;
     }
     void OnDisable()
     {
-        actions.Player.Disable();
-        actions.Player.Move.performed -= PerformMovement;
-        actions.Player.Move.canceled -= PerformMovement;
-        actions.Player.Jump.performed -= PerformJump;
-        actions.Player.Jump.canceled -= PerformJump;
+        unsubscribeFromEvents();
     }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(GetSpriteAnimator());
         _moveMultiplier = moveMultiplierOnGround;
-
     }
     void Update()
     {
+        if (isPlayerDead) return;
         // Check for ground
         CheckGrounded();
         // Check when is landing
@@ -238,14 +237,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // -------------------------- EDITOR HELPERS
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(groundCheckLeft.position, new Vector2(groundCheckLeft.position.x, groundCheckLeft.position.y - checkDistance));
-        Gizmos.DrawLine(groundCheckRight.position, new Vector2(groundCheckRight.position.x, groundCheckRight.position.y - checkDistance));
-    }
-
     // -------------------------- DUST EFFECT METHODS
     void PlayDust()
     {
@@ -260,8 +251,27 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // -------------------------- OTHERS
-    void ResetLandingFlag()
+    void changePlayerLifeStateToDead()
     {
-        hasLandedAlready = false;
+        unsubscribeFromEvents();
+        move = 0;
+        isPlayerDead = true;
+    }
+    void unsubscribeFromEvents()
+    {
+        actions.Player.Disable();
+        actions.Player.Move.performed -= PerformMovement;
+        actions.Player.Move.canceled -= PerformMovement;
+        actions.Player.Jump.performed -= PerformJump;
+        actions.Player.Jump.canceled -= PerformJump;
+
+        PlayerHealth.OnPlayerDeath -= changePlayerLifeStateToDead;
+    }
+    // -------------------------- EDITOR HELPERS
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(groundCheckLeft.position, new Vector2(groundCheckLeft.position.x, groundCheckLeft.position.y - checkDistance));
+        Gizmos.DrawLine(groundCheckRight.position, new Vector2(groundCheckRight.position.x, groundCheckRight.position.y - checkDistance));
     }
 }

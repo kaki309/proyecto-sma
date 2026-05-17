@@ -5,18 +5,51 @@ public class EnemyHealth : Being
 {
     public override int MaxHealth => _maxHealth;
     [SerializeField] int _maxHealth = 1;
+    [SerializeField] Collider2D[] collidersToDisable;
+    [SerializeField] EnemyIA iaController;
+    [SerializeField] float gravityScale = 5f;
+    [SerializeField] LayerMask groundLayer;
+
+    float groundRaycastDistance = 0.1f;
+    Transform rayCastOrigin;
     Animator animator;
-    Rigidbody2D rb;
     SpriteRenderer sprite;
-    [SerializeField] Collider2D[] colliders;
+    Vector3 velocity;
+    bool isDead = false;
 
     void Start()
     {
-        rb = GetComponentInParent<Rigidbody2D>();
-        animator = transform.parent.GetComponentInChildren<Animator>();
         sprite = transform.parent.GetComponentInChildren<SpriteRenderer>();
-        rb.gravityScale = 0;
+        animator = sprite.GetComponent<Animator>();
+        velocity = Vector3.zero;
+        rayCastOrigin = sprite.transform;
     }
+
+    void Update()
+    {
+        if (isDead) ApplyGravity();
+    }
+
+    void ApplyGravity()
+    {
+        // Check if touching ground with raycast
+        bool touchingGround = Physics2D.Raycast(rayCastOrigin.position, Vector2.down, groundRaycastDistance, groundLayer);
+
+        if (!touchingGround)
+        {
+            // Apply gravity
+            velocity.y -= gravityScale * Time.deltaTime;
+
+            // Apply to parent transform (where NavMeshAgent is)
+            transform.parent.position += new Vector3(0, velocity.y * Time.deltaTime, 0);
+        }
+        else
+        {
+            // Stop vertical movement when touching ground
+            velocity.y = 0;
+        }
+    }
+
     public override void TakeDamage(int damage = 1)
     {
         if (currentHealth > 1) StartCoroutine(PlayDamageEffect());
@@ -24,14 +57,14 @@ public class EnemyHealth : Being
     }
     protected override void Die()
     {
-        transform.parent.GetComponentInParent<EnemyIA>().enabled = false;
+        isDead = true;
+        iaController.IsDead = true;
         animator.SetBool("isDead", true);
-        rb.gravityScale = 1;
-        foreach (Collider2D collider in colliders)
+        foreach (Collider2D collider in collidersToDisable)
         {
             collider.enabled = false;
         }
-        Invoke(nameof(DestroyObject), 5f);
+        Invoke(nameof(DestroyObject), 4f);
     }
     void OnCollisionEnter2D(Collision2D collision)
     {

@@ -47,16 +47,19 @@ public class GameController : MonoBehaviour
     }
     public void GameOver()
     {
-        PlayerHealth.OnPlayerDeath -= GameOver;
         playerObject.GetComponent<PlayerMovement>().enabled = false;
-        Time.timeScale = 0f;
         StartCoroutine(ChangeGameOverCanvasStateDelayed(true, 3f));
     }
     public void RestartGame()
     {
-        Time.timeScale = 1f;
         SceneController.Instance.LoadSceneWithLoadingScreen(mainMenuSceneName);
         StartCoroutine(ChangeGameOverCanvasStateDelayed(false, 1.5f));
+    }
+    public void RetryGame()
+    {
+        SceneController.Instance.LoadSceneWithLoadingScreen(mainWorldSceneName);
+        StartCoroutine(ChangeGameOverCanvasStateDelayed(false, 0.25f));
+        Invoke(nameof(ActivateCharacterSprite), 3);
     }
     public void PauseGame()
     {
