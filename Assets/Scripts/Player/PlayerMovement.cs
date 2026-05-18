@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject dustEffect;
 
     // Events
-    public static Action<float> OnLandingEvent;
+    public static Action<float, Vector2> OnLandingEvent;
 
 
     // Interal variables
@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
     float jumpHoldTime;
     const float MAX_JUMP_HOLD_TIME = 1f;
     bool isPlayerDead;
+    float defaultGravityScale;
+    float timeScaleCompensation;
 
     // -------------------------- UNITY METHODS
     void Awake()
@@ -71,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(GetSpriteAnimator());
         _moveMultiplier = moveMultiplierOnGround;
+        defaultGravityScale = rb.gravityScale;
+        timeScaleCompensation = 1f / Time.timeScale;
     }
     void Update()
     {
@@ -92,8 +96,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(move * moveSpeed * _moveMultiplier * Time.fixedDeltaTime, rb.velocity.y);
+        timeScaleCompensation = 1f / Time.timeScale;
+        rb.velocity = new Vector2(move * moveSpeed * _moveMultiplier * Time.fixedUnscaledDeltaTime, rb.velocity.y);
 
+        rb.gravityScale = defaultGravityScale * timeScaleCompensation;
         ApplyJumpForce();
     }
     // -------------------------- MOVEMENT METHODS
@@ -137,8 +143,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && !hasLandedAlready)
         {
             hasLandedAlready = true;
-            OnLandingEvent?.Invoke(rb.velocity.y);
-            PlayDust();
+            OnLandingEvent?.Invoke(rb.velocity.y, transform.position);
         }
     }
     void UpdateJumpState()
@@ -166,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
         while (elapsed < duration)
         {
             _moveMultiplier = Mathf.Lerp(startSpeed, desiredSpeed, elapsed / duration);
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
 
@@ -181,12 +186,13 @@ public class PlayerMovement : MonoBehaviour
             // Apply initial impulse on first frame of jump
             if (!hasAppliedJumpImpulse)
             {
-                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                float jumpCompensation = Mathf.Sqrt(timeScaleCompensation);
+                rb.AddForce(new Vector2(0, jumpForce * jumpCompensation), ForceMode2D.Impulse);
                 hasAppliedJumpImpulse = true;
             }
 
             // Apply sustain force to extend jump
-            rb.AddForce(new Vector2(0, sustainedJumpForce), ForceMode2D.Force);
+            rb.AddForce(new Vector2(0, sustainedJumpForce * timeScaleCompensation), ForceMode2D.Force);
             jumpHoldTime += Time.fixedDeltaTime;
         }
     }
@@ -235,19 +241,6 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isJumping", false);
             animator.SetBool("isFalling", true);
         }
-    }
-
-    // -------------------------- DUST EFFECT METHODS
-    void PlayDust()
-    {
-        if (dustEffect == null) return;
-
-        dustEffect.SetActive(true);
-        Invoke(nameof(DisableDust), 1f);
-    }
-    void DisableDust()
-    {
-        dustEffect.SetActive(false);
     }
 
     // -------------------------- OTHERS

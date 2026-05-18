@@ -40,7 +40,7 @@ public class PlayerHealth : Being
         animator.SetTrigger("die");
     }
 
-    void HandleFallDamage(float fallSpeed)
+    void HandleFallDamage(float fallSpeed, Vector2 _)
     {
         float firstLimit = -11.0f;
         float secondLimit = -15.0f;

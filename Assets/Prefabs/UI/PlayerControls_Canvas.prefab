@@ -633,4 +633,4 @@ MonoBehaviour:
   buttonDisabled: {fileID: 1065907259290557328}
   vfx: {fileID: 0}
   transitionTime: 1
-  abilityTime: 10
+  abilityTime: 8
