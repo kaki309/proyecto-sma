@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FearManager : MonoBehaviour
 {
@@ -13,7 +14,11 @@ public class FearManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float secondsPerPercent = 1.6f;
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private List<AudioClip> fearClips;
 
+    private bool isScreaming = false;
     private float maxFear = 100f;
     private bool isTimerEnabled;
     private float currentFearPercent = 0f;
@@ -34,6 +39,8 @@ public class FearManager : MonoBehaviour
     {
         isTimerEnabled = false;
     }
+
+
     void Update()
     {
         if (!isTimerEnabled) return;
@@ -48,6 +55,8 @@ public class FearManager : MonoBehaviour
                 currentFearPercent = Mathf.Clamp(currentFearPercent, 0, maxFear);
                 UpdateInterface();
             }
+
+            CheckFearMilestone();
         }
         else
         {
@@ -55,26 +64,42 @@ public class FearManager : MonoBehaviour
             GameController.Instance.GameOver();
         }
     }
-    public void StartTimer() => isTimerEnabled = true;
 
+    void CheckFearMilestone()
+    {
+        if (isScreaming) return;
+        if (audioSource == null || fearClips == null || fearClips.Count == 0) return;
+
+        bool atMilestone = currentFearPercent % 20 == 0;
+        if (!atMilestone) return;
+
+        AudioClip clip = fearClips[Random.Range(0, fearClips.Count)];
+        StartCoroutine(PlayScream(clip));
+    }
+
+    IEnumerator PlayScream(AudioClip clip)
+    {
+        isScreaming = true;
+        audioSource.PlayOneShot(clip);
+        yield return new WaitForSecondsRealtime(clip.length);
+        isScreaming = false;
+    }
     void UpdateInterface()
     {
         if (counterText != null)
-        {
-            counterText.text = currentFearPercent.ToString("0") + "%";
-        }
+        { counterText.text = currentFearPercent.ToString("0") + "%"; }
 
         if (fearFillImage != null)
-        {
-            fearFillImage.fillAmount = currentFearPercent / maxFear;
-        }
+        { fearFillImage.fillAmount = currentFearPercent / maxFear; }
+
+        CheckFearMilestone();
     }
+    public void StartTimer() => isTimerEnabled = true;
 
     public float GetCurrentFear()
     {
         return currentFearPercent;
     }
-
     public void ReduceFear(float amount = 20f, bool instantly = false)
     {
         if (!isTimerEnabled) return;
