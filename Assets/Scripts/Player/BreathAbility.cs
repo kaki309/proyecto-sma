@@ -7,8 +7,8 @@ public class BreathAbility : MonoBehaviour
     [SerializeField] GameObject buttonEnabled;
     [SerializeField] GameObject buttonDisabled;
     [SerializeField] GameObject vfx;
-    [SerializeField] float transitionTime = 1f;
-    [SerializeField] float abilityTime = 10f;
+    [SerializeField] float transitionTime = 0.5f;
+    [SerializeField] float abilityTime = 8f;
 
     void Start()
     {
