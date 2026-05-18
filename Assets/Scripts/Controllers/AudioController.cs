@@ -41,6 +41,10 @@ public class AudioController : MonoBehaviour
 
         sfxSource.PlayOneShot(sfxClip);
     }
+    public void StopSfx()
+    {
+        sfxSource.Stop();
+    }
 
     public void PlayUiSound(AudioClip uiClip)
     {
@@ -49,10 +53,27 @@ public class AudioController : MonoBehaviour
         uiSource.PlayOneShot(uiClip);
     }
 
+    public void StopUISounds()
+    {
+        uiSource.Stop();
+    }
+
     public void StopAllAudio()
     {
         musicSource.Stop();
         sfxSource.Stop();
         uiSource.Stop();
+    }
+    public void PauseAllAudio()
+    {
+        musicSource.Pause();
+        sfxSource.Pause();
+        uiSource.Pause();
+    }
+    public void ResumeAllAudio()
+    {
+        musicSource.UnPause();
+        sfxSource.UnPause();
+        uiSource.UnPause();
     }
 }

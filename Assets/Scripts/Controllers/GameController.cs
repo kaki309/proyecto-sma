@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneController.Instance.LoadSceneWithLoadingScreen(mainMenuSceneName);
+        AudioController.Instance.StopSfx();
         StartCoroutine(ChangeGameOverCanvasStateDelayed(false, 1.5f));
         StartCoroutine(ChangePauseCanvasStateDelayed(false, 1.5f));
     }
@@ -61,17 +62,20 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneController.Instance.LoadSceneWithLoadingScreen(mainWorldSceneName);
+        AudioController.Instance.StopSfx();
         StartCoroutine(ChangeGameOverCanvasStateDelayed(false, 0.25f));
         Invoke(nameof(ActivateCharacterSprite), 3);
     }
     public void PauseGame()
     {
         Time.timeScale = 0f;
+        AudioController.Instance.PauseAllAudio();
         pauseCanvas.SetActive(true);
     }
     public void ResumeGame()
     {
         Time.timeScale = 1f;
+        AudioController.Instance.ResumeAllAudio();
         pauseCanvas.SetActive(false);
     }
     public void QuitGame()

@@ -53,8 +53,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   counterText: {fileID: 4274630853163400317}
   fearFillImage: {fileID: 870540052789502844}
-  secondsPerPercent: 1.6
-  maxFear: 100
+  secondsPerPercent: 1.15
+  fearClips:
+  - {fileID: 8300000, guid: a89f5c4beb1a7314ea5852591bd25d27, type: 3}
+  - {fileID: 8300000, guid: 72892fc20db2f1f4d86ad427efb39f38, type: 3}
 --- !u!1 &1021573684837225644
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +276,7 @@ MonoBehaviour:
   m_text: 0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aa22852e8f94ea74e867688f5ff779f2, type: 2}
-  m_sharedMaterial: {fileID: 6659110973331519622, guid: aa22852e8f94ea74e867688f5ff779f2, type: 2}
+  m_sharedMaterial: {fileID: -4495405317216647685, guid: aa22852e8f94ea74e867688f5ff779f2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

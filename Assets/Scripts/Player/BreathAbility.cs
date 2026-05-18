@@ -9,7 +9,7 @@ public class BreathAbility : MonoBehaviour
     [SerializeField] GameObject vfx;
     [SerializeField] float transitionTime = 0.5f;
     [SerializeField] float abilityTime = 8f;
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip breathingAudio;
 
     void Start()
     {
@@ -48,7 +48,7 @@ public class BreathAbility : MonoBehaviour
 
         Time.timeScale = 0.5f;
         vfx.SetActive(true);
-        audioSource.Play();
+        AudioController.Instance.PlaySfx(breathingAudio);
 
         yield return new WaitForSecondsRealtime(abilityTime);
 
@@ -63,6 +63,5 @@ public class BreathAbility : MonoBehaviour
 
         Time.timeScale = 1f;
         vfx.SetActive(false);
-        audioSource.Stop();
     }
 }

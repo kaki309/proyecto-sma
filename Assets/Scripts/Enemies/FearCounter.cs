@@ -15,7 +15,6 @@ public class FearManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float secondsPerPercent = 1.6f;
     [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
     [SerializeField] private List<AudioClip> fearClips;
 
     private bool isScreaming = false;
@@ -68,7 +67,7 @@ public class FearManager : MonoBehaviour
     void CheckFearMilestone()
     {
         if (isScreaming) return;
-        if (audioSource == null || fearClips == null || fearClips.Count == 0) return;
+        if (fearClips == null || fearClips.Count == 0) return;
 
         bool atMilestone = currentFearPercent % 20 == 0;
         if (!atMilestone) return;
@@ -80,7 +79,7 @@ public class FearManager : MonoBehaviour
     IEnumerator PlayScream(AudioClip clip)
     {
         isScreaming = true;
-        audioSource.PlayOneShot(clip);
+        AudioController.Instance.PlaySfx(clip);
         yield return new WaitForSecondsRealtime(clip.length);
         isScreaming = false;
     }
