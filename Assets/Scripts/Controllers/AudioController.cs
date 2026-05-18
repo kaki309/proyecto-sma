@@ -9,26 +9,6 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource uiSource;
 
-    [Header("Test Clips")]
-    [SerializeField] private AudioClip testMusicClip;
-    [SerializeField] private AudioClip testSfxClip;
-    [SerializeField] private AudioClip testUiClip;
-
-    public void TestPlayMusic()
-    {
-        PlayMusic(testMusicClip);
-    }
-
-    public void TestPlaySfx()
-    {
-        PlaySfx(testSfxClip);
-    }
-
-    public void TestPlayUiSound()
-    {
-        PlayUiSound(testUiClip);
-    }
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
