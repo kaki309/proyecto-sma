@@ -9,6 +9,7 @@ public class BreathAbility : MonoBehaviour
     [SerializeField] GameObject vfx;
     [SerializeField] float transitionTime = 0.5f;
     [SerializeField] float abilityTime = 8f;
+    [SerializeField] AudioSource audioSource;
 
     void Start()
     {
@@ -35,7 +36,6 @@ public class BreathAbility : MonoBehaviour
     }
     IEnumerator slowTime()
     {
-        vfx.SetActive(true);
         FearManager.Instance.ReduceFear(60f);
         float timer = 0f;
         while (timer < transitionTime)
@@ -45,7 +45,11 @@ public class BreathAbility : MonoBehaviour
             Time.timeScale = Mathf.Lerp(1f, 0.5f, progress);
             yield return null;
         }
+
         Time.timeScale = 0.5f;
+        vfx.SetActive(true);
+        audioSource.Play();
+
         yield return new WaitForSecondsRealtime(abilityTime);
 
         timer = 0f;
@@ -56,7 +60,9 @@ public class BreathAbility : MonoBehaviour
             Time.timeScale = Mathf.Lerp(0.5f, 1f, progress);
             yield return null;
         }
+
         Time.timeScale = 1f;
         vfx.SetActive(false);
+        audioSource.Stop();
     }
 }
