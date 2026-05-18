@@ -18,6 +18,7 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
     private int currentUses = 0;
 
     private Button button;
+    private Canvas canvas;
     private CanvasGroup canvasGroup;
     private Coroutine currentFade;
 
@@ -26,6 +27,7 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
         GetComponent<BoxCollider2D>().isTrigger = true;
 
         button = interactionCanvas.GetComponentInChildren<Button>(true);
+        canvas = interactionCanvas.GetComponent<Canvas>();
         canvasGroup = interactionCanvas.GetComponent<CanvasGroup>();
 
         button.onClick.RemoveAllListeners();
@@ -36,7 +38,14 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
         canvasGroup.alpha = 0f;
         interactionCanvas.SetActive(false);
     }
-
+    void OnEnable()
+    {
+        CameraChange.onCameraChanged += setCurrentCameraToCanvasEventCamera;
+    }
+    void OnDisable()
+    {
+        CameraChange.onCameraChanged -= setCurrentCameraToCanvasEventCamera;
+    }
     void OnInteractPressed()
     {
         if (!CanInteract()) return;
@@ -117,5 +126,9 @@ public abstract class InteractablesForPlayer : MonoBehaviour, IInteractable
 
         canvasGroup.alpha = 0f;
         interactionCanvas.SetActive(false);
+    }
+    void setCurrentCameraToCanvasEventCamera(Camera camara)
+    {
+        canvas.worldCamera = camara;
     }
 }

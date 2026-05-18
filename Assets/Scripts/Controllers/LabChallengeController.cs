@@ -1,13 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LabChallengeController : MonoBehaviour
 {
     public static LabChallengeController Instance;
     [SerializeField] GameObject winCanvas, orbsCounter, npc;
     [SerializeField] BreathAbility breathAbility;
+    [SerializeField] UnityEvent afterWinning;
+    [Header("Reset Lab Camera")]
+    [SerializeField] GameObject labCamera;
     int completedPuzzles;
     int puzzlesCount;
+    Vector3 originalCameraPosition;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -22,6 +27,7 @@ public class LabChallengeController : MonoBehaviour
 
     void Start()
     {
+        originalCameraPosition = labCamera.transform.position;
         winCanvas.SetActive(false);
         puzzlesCount = GameObject.FindObjectsOfType<ElectronicPuzzle>(true).Length;
     }
@@ -45,6 +51,8 @@ public class LabChallengeController : MonoBehaviour
     IEnumerator winChallenge()
     {
         winCanvas.SetActive(true);
+        afterWinning?.Invoke();
+        labCamera.transform.position = originalCameraPosition;
         npc.SetActive(false);
         FearManager.Instance.ReduceFear(100f, true);
         FearManager.Instance.ChangeTimerState(false);

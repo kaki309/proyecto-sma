@@ -2,17 +2,16 @@ using UnityEngine;
 
 public class PlayerCameraVertical : MonoBehaviour
 {
-    [SerializeField] Transform player;
     [SerializeField] float smoothTime = 0.25f;
-    [SerializeField] bool enableHorizontalMovement = false; // Antes era vertical
     [Header("World Limits")]
-    [SerializeField] Transform limitBottom; // Antes era limitLeft
-    [SerializeField] bool ignoreLimits = false;
+    [SerializeField] Transform limitTop;
+    [SerializeField] Transform limitBottom;
 
     // Internal params
+    Transform player;
     bool canFollowY;
     Vector3 desiredPosition;
-    Vector3 cameraVelocity = Vector3.zero;
+    Vector3 cameraVelocity = Vector3.zero; // Used by SmoothDamp
 
     void Start()
     {
@@ -26,44 +25,34 @@ public class PlayerCameraVertical : MonoBehaviour
     {
         if (player == null) return;
 
-        if (!ignoreLimits) BlockMovementOutsideLimits();
+        BlockMovementOutsideLimits();
         SetDesiredPosition();
         MoveY();
-        if (enableHorizontalMovement) ClampWidthToPlayer();
     }
 
     void BlockMovementOutsideLimits()
     {
-        // Verifica si el jugador está por encima del límite inferior
         bool canMoveDown = player.position.y >= limitBottom.position.y;
-        canFollowY = canMoveDown;
+        bool canMoveUp = player.position.y <= limitTop.position.y;
+        canFollowY = canMoveDown && canMoveUp;
     }
 
     void SetDesiredPosition()
     {
-        if (canFollowY)
+        bool isStillInsideLimits = transform.position.y < limitTop.position.y && transform.position.y > limitBottom.position.y;
+        if (canFollowY || isStillInsideLimits)
         {
-            // El objetivo es la Y del jugador, mantenemos la X e Z de la cámara
             desiredPosition = new Vector3(transform.position.x, player.position.y, transform.position.z);
         }
         else
         {
-            // Se queda quieta en su posición actual
             desiredPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
     }
 
     void MoveY()
     {
-        // Aplicamos el suavizado en el eje vertical
         Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref cameraVelocity, smoothTime);
         transform.position = smoothedPosition;
-    }
-
-    void ClampWidthToPlayer()
-    {
-        // Si quieres que también siga al jugador lateralmente de forma suave
-        Vector3 nextPos = new Vector3(player.position.x, transform.position.y, transform.position.z);
-        transform.position = Vector3.Slerp(transform.position, nextPos, smoothTime);
     }
 }
