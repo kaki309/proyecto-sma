@@ -552,11 +552,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2806311506394759146, guid: 1a9369e279aee5046bcbe96c7276b257, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.5
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 2806311506394759146, guid: 1a9369e279aee5046bcbe96c7276b257, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091843963972873610, guid: 1a9369e279aee5046bcbe96c7276b257, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.75
       objectReference: {fileID: 0}
     - target: {fileID: 4663537392593934437, guid: 1a9369e279aee5046bcbe96c7276b257, type: 3}
       propertyPath: m_Name
@@ -568,11 +572,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6868989265788698943, guid: 1a9369e279aee5046bcbe96c7276b257, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.25
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6868989265788698943, guid: 1a9369e279aee5046bcbe96c7276b257, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -67590,7 +67594,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Puedes utilizar este bot\xF3n una \xFAnica vez para ralentizar el tiempo
     y disminuir la velocidad de la sombra que te consume. \n\xDAsalo sabiamente,
-    el efecto s\xF3lo dura _ segundos.  "
+    el efecto s\xF3lo dura 8 segundos.  "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aa22852e8f94ea74e867688f5ff779f2, type: 2}
   m_sharedMaterial: {fileID: -4495405317216647685, guid: aa22852e8f94ea74e867688f5ff779f2, type: 2}
