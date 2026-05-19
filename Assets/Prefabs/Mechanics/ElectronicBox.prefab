@@ -429,7 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionCanvas: {fileID: 1578758554095013814}
   fadeDuration: 0.3
-  maxUses: 1
+  maxUses: -1
   puzzleCanvas: {fileID: 3999545311994267558}
 --- !u!95 &9114899932026712379
 Animator:

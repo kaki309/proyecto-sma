@@ -11,16 +11,23 @@ public class PuzzleUI : MonoBehaviour
 
     Vector2 targetPos;
     Vector2 startPos;
+    Vector2 originalPos;
+    bool isInitialized = false;
 
     void OnEnable()
     {
+        if (!isInitialized)
+        {
+            originalPos = puzzleContainer.anchoredPosition;
+            isInitialized = true;
+        }
         Setup();
         StartCoroutine(AnimateIn());
     }
 
     void Setup()
     {
-        targetPos = puzzleContainer.anchoredPosition;
+        targetPos = originalPos;
         startPos = targetPos + Vector2.down * offsetY;
 
         puzzleContainer.anchoredPosition = startPos;
@@ -47,7 +54,7 @@ public class PuzzleUI : MonoBehaviour
         puzzleContainer.anchoredPosition = targetPos;
         blackPanel.alpha = panelOpacity;
     }
-
+    public void closePuzzle() => StartCoroutine(Hide());
     public IEnumerator Hide()
     {
         yield return StartCoroutine(AnimateOut());
@@ -70,8 +77,8 @@ public class PuzzleUI : MonoBehaviour
             yield return null;
         }
 
-        Invoke(nameof(DisableGameObject), 2f);
+        // Restaurar la posición original antes de desactivar
+        puzzleContainer.anchoredPosition = originalPos;
+        gameObject.SetActive(false);
     }
-
-    void DisableGameObject() => gameObject.SetActive(false);
 }

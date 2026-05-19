@@ -50,11 +50,10 @@ public class ElectronicPuzzle : MonoBehaviour
         }
         yield return new WaitForSeconds(1.2f);
 
-        yield return puzzleCanvas.Hide();
-
         electricBoxAnimator.SetTrigger("fixBox");
+        OnPuzzleFinished?.Invoke();
 
         LabChallengeController.Instance.completePuzzle();
-        OnPuzzleFinished?.Invoke();
+        puzzleCanvas.closePuzzle();
     }
 }
