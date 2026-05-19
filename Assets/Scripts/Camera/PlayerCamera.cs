@@ -46,11 +46,15 @@ public class PlayerCamera : MonoBehaviour
         else
         {
             desiredPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            cameraVelocity.x = 0f;
         }
     }
     void MoveX()
     {
         Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref cameraVelocity, smoothTime);
+        
+        smoothedPosition.x = Mathf.Clamp(smoothedPosition.x, limitLeft.position.x, limitRight.position.x);
+        
         transform.position = smoothedPosition;
     }
 }
