@@ -22,6 +22,7 @@ public class FearManager : MonoBehaviour
     private bool isTimerEnabled;
     private float currentFearPercent = 0f;
     private float timer = 0f;
+    PlayerHealth playerHealth;
 
     void Awake()
     {
@@ -37,6 +38,7 @@ public class FearManager : MonoBehaviour
     void Start()
     {
         isTimerEnabled = false;
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
 
@@ -60,6 +62,7 @@ public class FearManager : MonoBehaviour
         else
         {
             isTimerEnabled = false;
+            playerHealth.TakeDamage(playerHealth.MaxHealth);
             GameController.Instance.GameOver();
         }
     }

@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
     [Header("UI")]
     [SerializeField] GameObject gameOverCanvas;
     [SerializeField] GameObject pauseCanvas;
+    [Header("SFX")]
+    [SerializeField] AudioClip gameOverSFX;
 
     [Header("Scenes")]
     [SerializeField] string mainMenuSceneName = "MainMenu";
@@ -45,10 +47,12 @@ public class GameController : MonoBehaviour
         // And then activate the character's sprite
         Invoke(nameof(ActivateCharacterSprite), 4);
     }
-    public void GameOver()
+    public void GameOver() => StartCoroutine(gameOverSequence());
+    IEnumerator gameOverSequence()
     {
         Time.timeScale = 1f;
-        StartCoroutine(ChangeGameOverCanvasStateDelayed(true, 3f));
+        yield return ChangeGameOverCanvasStateDelayed(true, 3f);
+        AudioController.Instance.PlaySfx(gameOverSFX);
     }
     public void RestartGame()
     {

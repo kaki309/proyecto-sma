@@ -1064,6 +1064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverCanvas: {fileID: 7996134592657361346}
   pauseCanvas: {fileID: 919479545}
+  gameOverSFX: {fileID: 8300000, guid: 7b85e20dd41d93247b422d6a9ca8a626, type: 3}
   mainMenuSceneName: MainMenu
   mainWorldSceneName: MainWorld
 --- !u!1 &1893439205

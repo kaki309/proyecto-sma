@@ -8,6 +8,7 @@ public class LabChallengeController : MonoBehaviour
     [SerializeField] GameObject winCanvas, orbsCounter, npc;
     [SerializeField] BreathAbility breathAbility;
     [SerializeField] UnityEvent afterWinning;
+    [SerializeField] AudioClip winChallengeSFX;
     [Header("Reset Lab Camera")]
     [SerializeField] GameObject labCamera;
     int completedPuzzles;
@@ -51,6 +52,7 @@ public class LabChallengeController : MonoBehaviour
     IEnumerator winChallenge()
     {
         winCanvas.SetActive(true);
+        AudioController.Instance.PlaySfx(winChallengeSFX);
         afterWinning?.Invoke();
         labCamera.transform.position = originalCameraPosition;
         npc.SetActive(false);
